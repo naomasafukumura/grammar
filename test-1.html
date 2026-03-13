@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Chapter 1 テスト</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #07A2B8;
+            --primary-light: #58d0e0;
+            --primary-dark: #057a8c;
+            --secondary: #F8B400;
+            --accent: #FF6B6B;
+            --dark: #2D3748;
+            --light: #F7FAFC;
+            --gray: #E2E8F0;
+            --success: #48BB78;
+            --error: #E53E3E;
+            --card-radius: 16px;
+            --transition-normal: 0.3s ease;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.08);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            font-family: "Noto Sans JP", sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            color: var(--dark);
+            line-height: 1.5;
+            padding: 20px;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 800px;
+            background: linear-gradient(180deg, var(--light) 0%, #EDF2F7 100%);
+            border-radius: 24px;
+            box-shadow: var(--shadow-lg);
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+            margin: 20px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .test-title {
+            color: var(--primary);
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin: 0;
+        }
+
+        .menu-button {
+            background: var(--light);
+            border-radius: 50%;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition-normal);
+            box-shadow: var(--shadow-sm);
+            border: none;
+        }
+
+        .menu-button:hover {
+            background: var(--primary-light);
+            transform: scale(1.05);
+        }
+
+        .menu-button svg {
+            width: 24px;
+            height: 24px;
+            color: var(--primary);
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 8px;
+            background-color: var(--gray);
+            border-radius: 4px;
+            margin-bottom: 24px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--primary-light) 100%);
+            width: 0%;
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        /* 名前入力画面 */
+        .name-screen {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .name-screen h2 {
+            font-size: 22px;
+            margin-bottom: 24px;
+            color: var(--dark);
+        }
+
+        .input-group {
+            width: 100%;
+            margin-bottom: 24px;
+        }
+
+        .input-label {
+            display: block;
+            font-size: 16px;
+            margin-bottom: 8px;
+            color: var(--dark);
+            text-align: left;
+        }
+
+        .text-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--primary-light);
+            border-radius: 8px;
+            font-size: 16px;
+            color: var(--dark);
+            background-color: white;
+            transition: all 0.3s ease;
+        }
+
+        .text-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(7, 162, 184, 0.2);
+        }
+
+        /* 問題画面 */
+        .question-screen {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .question-number {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .question-card {
+            background-color: white;
+            border-radius: var(--card-radius);
+            padding: 24px;
+            margin-bottom: 24px;
+            position: relative;
+            box-shadow: var(--shadow-md);
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+        }
+
+        .japanese-text {
+            font-size: 22px;
+            font-weight: 500;
+            color: var(--dark);
+            margin-bottom: 24px;
+            line-height: 1.4;
+        }
+
+        .answer-container {
+            position: relative;
+            margin-bottom: 12px;
+        }
+
+        .answer-input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid var(--gray);
+            border-radius: 8px;
+            font-size: 18px;
+            color: var(--dark);
+            background-color: white;
+            transition: all 0.3s ease;
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .answer-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(7, 162, 184, 0.2);
+        }
+
+        .button {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition-normal);
+            box-shadow: var(--shadow-sm);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* ボタン無効化状態のスタイル */
+        .button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: translateY(0);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .button svg {
+            margin-left: 8px;
+            width: 20px;
+            height: 20px;
+        }
+
+        .button-secondary {
+            background: linear-gradient(135deg, var(--secondary) 0%, #e0a700 100%);
+        }
+
+        /* 回答確認画面 */
+        .review-screen {
+            flex: 1;
+            display: none;
+            flex-direction: column;
+            animation: fadeIn 0.5s ease;
+            overflow-y: auto;
+            max-height: 70vh;
+        }
+
+        .review-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--primary);
+            text-align: center;
+        }
+
+        .review-list {
+            margin-bottom: 20px;
+            overflow-y: auto;
+        }
+
+        .review-item {
+            background-color: white;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            box-shadow: var(--shadow-sm);
+            position: relative;
+        }
+
+        .review-item.editing {
+            border: 2px solid var(--primary);
+            box-shadow: 0 0 0 3px rgba(7, 162, 184, 0.2);
+        }
+
+        .review-question {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--dark);
+        }
+
+        .review-answer {
+            color: var(--dark);
+            margin-bottom: 8px;
+        }
+
+        /* 既存の review-edit-container を上書き */
+.review-edit-container{
+  display:flex;
+  flex-direction:column;      /* ←まずは縦並び */
+  gap:8px;                    /* 要素間の余白 */
+}
+
+/* テキストエリアが画面幅いっぱいに広がるように */
+.review-edit-input{
+  width:100%;
+}
+
+/* 保存ボタンをやや小さく & 右寄せ */
+.save-edit-button{
+  align-self:flex-end;
+  padding:8px 20px;           /* 好みで調整 */
+  font-size:14px;
+}
+
+/* 画面が広くなったら従来の横並びに戻す */
+@media (min-width:520px){
+  .review-edit-container{
+    flex-direction:row;       /* 横並び */
+    align-items:center;
+  }
+  .save-edit-button{
+    margin-left:8px;          /* 元のレイアウト感に近づける場合 */
+  }
+}
+
+
+        .review-edit-input {
+            flex: 1;
+            padding: 10px 12px;
+            border: 2px solid var(--gray);
+            border-radius: 6px;
+            font-size: 16px;
+            color: var(--dark);
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .review-edit-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .fixed-bottom {
+            position: sticky;
+            bottom: 0;
+            background: linear-gradient(180deg, rgba(255,255,255,0) 0%, var(--light) 20%);
+            padding-top: 20px;
+            margin-top: auto;
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+
+        /* 結果画面 */
+        .result-screen {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .result-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--primary);
+        }
+
+        .result-score {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            color: var(--dark);
+        }
+
+        .result-message {
+            font-size: 18px;
+            margin-bottom: 32px;
+            color: var(--dark);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        /* 送信ステータス表示のスタイル */
+        .submission-status {
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 500;
+            text-align: center;
+            background-color: #f8f9fa;
+            border-left: 3px solid var(--primary);
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .submission-warning {
+            color: var(--error);
+            margin-top: 5px;
+            font-weight: bold;
+        }
+
+        .submission-success {
+            color: var(--success);
+        }
+
+        /* アニメーション */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* モバイル対応 */
+        @media (max-width: 520px) {
+            .app-container {
+                margin: 0;
+                border-radius: 0;
+                min-height: 100vh;
+                max-width: 100%;
+                padding: 16px;
+            }
+            
+            .test-title {
+                font-size: 20px;
+            }
+            
+            .japanese-text {
+                font-size: 20px;
+            }
+            
+            .answer-input {
+                font-size: 16px;
+            }
+
+            .review-screen {
+                max-height: calc(100vh - 160px);
+            }
+            
+            .button-group {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .button {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+    <script src="js/transition.js"></script>
+</head>
+<body data-chapter-id="1">
+    <div class="app-container" id="app-container">
+        <div class="header">
+            <h1 class="test-title" id="test-title">Chapter 1 テスト</h1>
+            <button class="menu-button" id="menu-button" title="メニューに戻る">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+
+        <div class="progress-container" id="progress-container">
+            <div class="progress-bar" id="progress-bar"></div>
+        </div>
+
+        <!-- 名前入力画面 -->
+        <div class="name-screen" id="name-screen">
+            <h2>英語テストへようこそ！</h2>
+            <p>テストを始める前に、お名前を入力してください。</p>
+            
+            <div class="input-group">
+                <label for="fullname" class="input-label">フルネーム</label>
+                <input type="text" id="fullname" class="text-input" placeholder="例）山田 太郎" required>
+            </div>
+            
+            <button class="button" id="start-button">
+                テストを開始する
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+            </button>
+        </div>
+
+        <!-- 問題画面 -->
+        <div class="question-screen" id="question-screen">
+            <div class="question-number" id="question-number">問題 1/20</div>
+            
+            <div class="question-card">
+                <p class="japanese-text" id="japanese-text">ここに日本語の文章が表示されます。</p>
+                
+                <div class="answer-container">
+                    <textarea id="answer-input" class="answer-input" placeholder="英語で答えを入力してください" rows="4"></textarea>
+                </div>
+            </div>
+            
+            <button class="button" id="next-button">
+                次へ
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+            </button>
+        </div>
+
+        <!-- 回答確認画面 -->
+        <div class="review-screen" id="review-screen">
+            <h2 class="review-title">回答確認と修正</h2>
+            
+            <div class="review-list" id="review-list">
+                <!-- ここに回答一覧が動的に追加されます -->
+            </div>
+            
+            <div class="fixed-bottom">
+                <button class="button" id="finish-review-button">
+                    確認完了
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- 結果画面 -->
+        <div class="result-screen" id="result-screen">
+            <h2 class="result-title">テスト完了！</h2>
+            <!-- <p class="result-score" id="result-score">20/20</p> -->
+            <p class="result-message" id="result-message">お疲れ様でした！</p>
+            
+            <div class="button-group">
+                <button class="button" id="submit-button">
+                    結果を提出
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 2v16H8a2 2 0 0 0-2 2v4"></path>
+                        <path d="M18 14v8"></path>
+                        <path d="M15 14v8"></path>
+                        <path d="M8 22H4a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h8"></path>
+                    </svg>
+                </button>
+            </div>
+            
+            <!-- 送信ステータス表示用の要素 -->
+            <div id="submission-status" class="submission-status"></div>
+        </div>
+    </div>
+
+    <script>
+        // テストデータ
+        const testData = createTestDataByChapter(
+            document.body.getAttribute('data-chapter-id'),
+            document.body.getAttribute('data-test-part') || ''
+        );
+        const questionScreen = document.getElementById('question-screen');
+        const reviewScreen = document.getElementById('review-screen');
+        const resultScreen = document.getElementById('result-screen');
+        const fullnameInput = document.getElementById('fullname');
+        const startButton = document.getElementById('start-button');
+        const questionNumber = document.getElementById('question-number');
+        const progressBar = document.getElementById('progress-bar');
+        const nameScreen = document.getElementById('name-screen');
+        const japaneseText = document.getElementById('japanese-text');
+        const answerInput = document.getElementById('answer-input');
+        const nextButton = document.getElementById('next-button');
+        const reviewList = document.getElementById('review-list');
+        const finishReviewButton = document.getElementById('finish-review-button');
+        const resultScore = document.getElementById('result-score');
+        const resultMessage = document.getElementById('result-message');
+        const restartButton = document.getElementById('restart-button');
+        const submitButton = document.getElementById('submit-button');
+        const menuButton = document.getElementById('menu-button');
+        const submissionStatus = document.getElementById('submission-status');
+        
+        // 変数
+        let currentQuestions = [];
+        let currentQuestionIndex = 0;
+        let correctAnswers = 0;
+        let userAnswers = [];
+        let isSubmitting = false; // 送信中フラグ
+        
+        // イベントリスナー
+        document.addEventListener('DOMContentLoaded', function() {
+            // テスト開始ボタン
+            startButton.addEventListener('click', startTest);
+            
+            // 次へボタン
+            nextButton.addEventListener('click', function() {
+                // 回答を記録
+                userAnswers[currentQuestionIndex] = answerInput.value;
+                
+                // 次の問題へ
+                currentQuestionIndex++;
+                
+                // すべての問題が終わったか確認
+                if (currentQuestionIndex >= currentQuestions.length) {
+                    showReviewScreen();  // 問題終了後に回答確認画面を表示
+                } else {
+                    updateProgressBar();
+                    showQuestion(currentQuestionIndex);
+                }
+            });
+            
+            // 確認完了ボタン
+            finishReviewButton.addEventListener('click', function() {
+                showResults();
+            });
+                        
+            // やり直しボタン
+        if (restartButton) {
+            restartButton.addEventListener('click', function() {
+                // 状態をリセット
+                currentQuestionIndex = 0;
+                userAnswers = new Array(currentQuestions.length).fill('');
+                
+                // 問題を再選択 - "all"に変更
+                prepareQuestions("all");
+                
+                // 最初の問題を表示
+                updateProgressBar();
+                showQuestion(currentQuestionIndex);
+                
+                // 画面の切り替え
+                resultScreen.style.display = 'none';
+                questionScreen.style.display = 'flex';
+                
+                // 送信状態をリセット
+                submissionStatus.style.display = 'none';
+                submitButton.disabled = false;
+                isSubmitting = false;
+            });
+        }
+            
+            // 結果提出ボタン（連打防止機能付き）
+            submitButton.addEventListener('click', submitResults);
+            
+            // メニューに戻るボタン
+            menuButton.addEventListener('click', goToMenu);
+            
+            // Enterキーで次へ
+            answerInput.addEventListener('keydown', function(event) {
+                if (event.key === 'Enter' && event.ctrlKey) {
+                    nextButton.click();
+                }
+            });
+
+            // レビュー画面の入力欄でEnterキーで保存
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Enter' && event.ctrlKey) {
+                    const activeElement = document.activeElement;
+                    if (activeElement.classList.contains('review-edit-input')) {
+                        const reviewItem = activeElement.closest('.review-item');
+                        const saveButton = reviewItem.querySelector('.save-edit-button');
+                        saveButton.click();
+                    }
+                }
+            });
+        });
+        
+        // テスト開始
+        function startTest() {
+            // 名前の入力チェック
+            if (!fullnameInput.value.trim()) {
+                alert('お名前を入力してください');
+                return;
+            }
+            
+            // 名前を保存
+            const userName = fullnameInput.value.trim();
+            
+            // 問題を準備 - 常に"all"を使用
+            prepareQuestions("all");
+            
+            // 最初の問題を表示
+            currentQuestionIndex = 0;
+            correctAnswers = 0;
+            userAnswers = new Array(currentQuestions.length).fill('');
+            updateProgressBar();
+            showQuestion(currentQuestionIndex);
+            
+            // 画面の切り替え
+            nameScreen.style.display = 'none';
+            questionScreen.style.display = 'flex';
+        }
+        
+        // 問題の準備
+        function prepareQuestions(titleValue) {
+            let allQuestions = [];
+            
+            // 選択したタイトルに基づいて問題を取得
+            if (titleValue === 'all') {
+                // すべてのタイトルから問題を取得
+                Object.values(testData).forEach(questions => {
+                    allQuestions = allQuestions.concat(questions);
+                });
+                
+                // 問題をシャッフル
+                shuffleArray(allQuestions);
+                
+                // 20問を選択（配列の長さを超えないように）
+                const numQuestions = Math.min(20, allQuestions.length);
+                currentQuestions = allQuestions.slice(0, numQuestions);
+            } else {
+                // 特定のタイトルの問題を取得
+                allQuestions = testData[titleValue] || [];
+                
+                // 問題をシャッフル
+                shuffleArray(allQuestions);
+                
+                // すべての問題を使用
+                currentQuestions = allQuestions;
+            }
+            
+            console.log(`テスト問題: ${currentQuestions.length}問を準備しました`);
+        }
+        
+        // 配列をシャッフルする関数
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+        
+        // 進捗バーの更新
+        function updateProgressBar() {
+            const progress = (currentQuestionIndex / currentQuestions.length) * 100;
+            progressBar.style.width = `${progress}%`;
+        }
+        
+        // 問題を表示
+        function showQuestion(index) {
+            // 範囲外のインデックスをチェック
+            if (index >= currentQuestions.length) {
+                showReviewScreen();
+                return;
+            }
+            
+            // 現在の問題を取得
+            const question = currentQuestions[index];
+            
+            // 問題番号の更新
+            questionNumber.textContent = `問題 ${index + 1}/${currentQuestions.length}`;
+            
+            // 日本語テキストの設定
+            japaneseText.textContent = question.japanese;
+            
+            // 入力フィールドをクリア
+            answerInput.value = userAnswers[index] || '';
+            answerInput.focus();
+        }
+        
+function showReviewScreen() {
+    // 回答一覧をクリア
+    reviewList.innerHTML = '';
+    
+    // 各問題と回答のペアを表示
+    for (let i = 0; i < currentQuestions.length; i++) {
+        const question = currentQuestions[i];
+        const answer = userAnswers[i] || '';
+        
+        const reviewItem = document.createElement('div');
+        reviewItem.className = 'review-item';
+        reviewItem.dataset.index = i;
+        
+        reviewItem.innerHTML = `
+            <div class="review-question">${i + 1}. ${question.japanese}</div>
+            <div class="review-answer">回答: ${answer}</div>
+            <div class="review-edit-container" style="display: none;">
+                <textarea class="review-edit-input">${answer}</textarea>
+                <button class="button button-small button-secondary save-edit-button" style="margin-left: 8px; padding: 8px 16px; font-size: 14px;">保存</button>
+            </div>
+            <button class="button button-small edit-button" style="margin-top: 8px; padding: 8px 16px; font-size: 14px;">修正</button>
+        `;
+        
+        reviewList.appendChild(reviewItem);
+        
+        // ここでは個別にイベントリスナーを追加するコードを削除
+    }
+    
+    // 問題画面を非表示にして回答確認画面を表示
+    questionScreen.style.display = 'none';
+    reviewScreen.style.display = 'flex';
+    
+    // ここに新しく一括イベントリスナー設定コードを追加 ★★★
+    document.querySelectorAll('.edit-button').forEach(button => {
+        button.addEventListener('click', function() {
+            const reviewItem = this.closest('.review-item');
+            const editContainer = reviewItem.querySelector('.review-edit-container');
+            const editInput = reviewItem.querySelector('.review-edit-input');
+            
+            // 編集モードを切り替え
+            reviewItem.classList.add('editing');
+            editContainer.style.display = 'flex';
+            this.style.display = 'none';
+            
+            // フォーカスを入力欄に設定
+            editInput.focus();
+        });
+    });
+    
+    document.querySelectorAll('.save-edit-button').forEach(button => {
+        button.addEventListener('click', function() {
+            const reviewItem = this.closest('.review-item');
+            const index = parseInt(reviewItem.dataset.index);
+            const editInput = reviewItem.querySelector('.review-edit-input');
+            const editContainer = reviewItem.querySelector('.review-edit-container');
+            const editButton = reviewItem.querySelector('.edit-button');
+            const answerDisplay = reviewItem.querySelector('.review-answer');
+            
+            // 回答を更新
+            const newAnswer = editInput.value;
+            userAnswers[index] = newAnswer;
+            
+            // 表示を更新
+            answerDisplay.textContent = `回答: ${newAnswer}`;
+            
+            // 編集モードを解除
+            reviewItem.classList.remove('editing');
+            editContainer.style.display = 'none';
+            editButton.style.display = 'inline-block';
+            
+            // 正誤判定を更新
+            updateScoreAfterEdit();
+        });
+    });
+}
+        
+        
+        
+        // 編集後のスコア再計算
+        function updateScoreAfterEdit() {
+            correctAnswers = 0;
+            
+            for (let i = 0; i < currentQuestions.length; i++) {
+                const correctAnswer = currentQuestions[i].english.trim().toLowerCase();
+                const userAnswer = userAnswers[i].trim().toLowerCase();
+                
+                if (userAnswer === correctAnswer) {
+                    correctAnswers++;
+                }
+            }
+        }
+        
+        // 結果画面を表示
+        // 結果画面を表示
+        function showResults() {
+            // スコアを計算
+            updateScoreAfterEdit();
+            
+            // スコアを表示 - この行をコメントアウト
+            resultMessage.textContent = 'お疲れ様でした！';
+            
+            // 画面を切り替え
+            reviewScreen.style.display = 'none';
+            resultScreen.style.display = 'flex';
+        }
+        
+        // submitResults関数を実際のデータ送信を行うように変更します
+
+        
+        // メニューに戻る// submitResults関数を実際のデータ送信を行うように変更します
+function submitResults() {
+    // 既に送信中の場合は処理をスキップ
+    if (isSubmitting) {
+        return;
+    }
+    
+    // 送信中状態にする
+    isSubmitting = true;
+    
+    // ボタンを無効化
+    submitButton.disabled = true;
+    
+    // 送信中メッセージを表示
+    submissionStatus.style.display = 'block';
+    submissionStatus.innerHTML = `
+        <div>
+            <p>送信中です...。10秒ほど、しばらくお待ちください。</p>
+            <p class="submission-warning">⚠️"結果を提出"ボタンの連打はお控えください！バグが発生します</p>
+        </div>
+    `;
+    
+    // テストデータを準備
+    const answersData = [];
+    for (let i = 0; i < currentQuestions.length; i++) {
+        answersData.push({
+            user: userAnswers[i].trim(),
+            correct: currentQuestions[i].english.trim(),
+            japanese: currentQuestions[i].japanese
+        });
+    }
+    
+    // GASのWebアプリURLを設定（デプロイ後に取得したURL）
+    const gasWebAppURL = 'https://script.google.com/macros/s/AKfycby22oH6WDDAV1HkhLEixncUDVV213t17F-nLLPiCopBKf9kYsDkLbxYnqjCULPr7cKm/exec';
+    
+    // 送信データを準備
+    const testTitleElement = document.getElementById('test-title');
+    const testTitle = testTitleElement ? testTitleElement.textContent : '';
+    
+    const formData = new FormData();
+    formData.append('name', fullnameInput.value);
+    formData.append('timestamp', new Date().toLocaleString());
+    formData.append('testTitle', testTitle);
+    formData.append('answers', JSON.stringify(answersData));
+    
+    // 成功フラグ（タイムアウト対策）
+    let isSubmissionHandled = false;
+    
+    // 成功処理を実行する共通関数
+    function handleSuccess() {
+        if (isSubmissionHandled) return; // 重複実行防止
+        isSubmissionHandled = true;
+        
+        // 送信完了メッセージを表示
+        submissionStatus.innerHTML = `
+            <div>
+                <p class="submission-success">✅ ${fullnameInput.value}さんの結果を記録しました！</p>
+            </div>
+        `;
+        
+        // 10秒後にボタンを再度有効化
+        setTimeout(function() {
+            submitButton.disabled = false;
+            isSubmitting = false;
+        }, 10000);
+    }
+    
+    // エラー処理を実行する共通関数
+    function handleError(errorMessage) {
+        if (isSubmissionHandled) return; // 重複実行防止
+        isSubmissionHandled = true;
+        
+        console.error('送信エラー:', errorMessage);
+        submissionStatus.innerHTML = `
+            <div>
+                <p style="color: var(--error);">❌ 送信中にエラーが発生しました。もう一度お試しください。</p>
+            </div>
+        `;
+        
+        // 5秒後にボタンを再度有効化
+        setTimeout(function() {
+            submitButton.disabled = false;
+            isSubmitting = false;
+        }, 5000);
+    }
+    
+    // タイムアウト設定（8秒後に強制的に成功扱いにする）
+    const timeoutId = setTimeout(function() {
+        console.log('送信タイムアウト - 成功扱いで処理');
+        handleSuccess();
+    }, 8000);
+    
+    // GASにデータを送信
+    fetch(gasWebAppURL, {
+        method: 'POST',
+        body: formData,
+        mode: 'no-cors' // CORS対策
+    })
+    .then(response => {
+        // タイムアウトをクリア
+        clearTimeout(timeoutId);
+        
+        // no-corsモードでは応答が空になるため、成功とみなす
+        console.log('送信レスポンス受信 - 成功扱いで処理');
+        handleSuccess();
+    })
+    .catch(error => {
+        // タイムアウトをクリア
+        clearTimeout(timeoutId);
+        
+        // エラー処理
+        handleError(error);
+    });
+}
+        function goToMenu() {
+            let chpterId = document.body.getAttribute('data-chapter-id');
+            // インデックスページに戻る（学習中のchapterに遷移）
+            window.location.href = "index.html#chapter" + chpterId;
+        }
+    </script>
+    <script src="js/test-persistence.js"></script>
+</body>
+</html>

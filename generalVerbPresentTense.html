@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>1. 現在形(一般動詞) - フラッシュカード</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #07A2B8;
+            --primary-light: #58d0e0;
+            --primary-dark: #057a8c;
+            --secondary: #F8B400;
+            --accent: #FF6B6B;
+            --dark: #2D3748;
+            --light: #F7FAFC;
+            --gray: #E2E8F0;
+            --success: #48BB78;
+            --card-radius: 16px;
+            --transition-normal: 0.3s ease;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.08);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            font-family: "Noto Sans JP", sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            color: var(--dark);
+            line-height: 1.5;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 400px;
+            min-height: 640px;
+            background: linear-gradient(180deg, var(--light) 0%, #EDF2F7 100%);
+            border-radius: 24px;
+            box-shadow: var(--shadow-lg);
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+            margin: 20px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .chapter-title {
+            color: var(--primary);
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin: 0;
+        }
+
+        .menu-button {
+            background: var(--light);
+            border-radius: 50%;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition-normal);
+            box-shadow: var(--shadow-sm);
+            border: none;
+        }
+
+        .menu-button:hover {
+            background: var(--primary-light);
+            transform: scale(1.05);
+        }
+
+        .menu-button svg {
+            width: 24px;
+            height: 24px;
+            color: var(--primary);
+        }
+
+        .card {
+            background-color: white;
+            border-radius: var(--card-radius);
+            padding: 24px;
+            height: 240px;
+            margin-bottom: 24px;
+            position: relative;
+            box-shadow: var(--shadow-md);
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            transform-origin: center;
+        }
+
+        .card:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-2px);
+        }
+
+        .card-counter {
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 18px;
+            margin-bottom: 16px;
+        }
+
+        .card-content {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .japanese-text {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .english-text {
+            font-size: 22px;
+            font-weight: 500;
+            color: var(--dark);
+            line-height: 1.4;
+        }
+
+        .note-container {
+            background-color: rgba(7, 162, 184, 0.1);
+            border-radius: 8px;
+            padding: 12px;
+            margin-top: 16px;
+            border-left: 3px solid var(--primary);
+        }
+
+        .note-text {
+            font-size: 14px;
+            color: var(--primary-dark);
+            text-align: center;
+        }
+
+        .success-container {
+            display: none;
+            height: auto;
+            margin-bottom: 24px;
+            position: relative;
+        }
+
+        .success-card {
+            background-color: white;
+            border-radius: var(--card-radius);
+            padding: 20px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-md);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .success-image {
+            width: 200px;
+            height: auto;
+            margin-bottom: 20px;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .arrow-button {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            border: none;
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition-normal);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .arrow-button:hover {
+            transform: scale(1.05);
+            box-shadow: var(--shadow-md);
+        }
+
+        .arrow-button svg {
+            width: 24px;
+            height: 24px;
+            color: white;
+        }
+
+        .left-arrow {
+            background: linear-gradient(135deg, #e0a700 0%, var(--secondary) 100%);
+        }
+
+        .restart-button {
+            background: linear-gradient(135deg, var(--accent) 0%, #e54b4b 100%);
+            border: none;
+            border-radius: 20px;
+            padding: 0 16px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition-normal);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .restart-button:hover {
+            transform: scale(1.05);
+            box-shadow: var(--shadow-md);
+        }
+
+        .restart-button svg {
+            width: 24px;
+            height: 24px;
+            color: white;
+            margin-right: 8px;
+        }
+
+        .restart-button span {
+            color: white;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .finish-button {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 20px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition-normal);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .restart-chapter-button {
+            background: linear-gradient(135deg, #9B59B6 0%, #8E44AD 100%);
+        }
+
+        .restart-chapter-button:hover {
+            background: linear-gradient(135deg, #8E44AD 0%, #7D3C98 100%);
+        }        
+
+        .finish-button:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .custom-audio-player {
+            width: 100%;
+            height: 40px;
+            position: absolute;
+            bottom: 10px;
+            left: 0;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            z-index: 100;
+            pointer-events: auto;
+        }
+
+        .audio-progress {
+            flex: 1;
+            height: 6px;
+            background-color: var(--gray);
+            border-radius: 3px;
+            position: relative;
+            cursor: pointer;
+            overflow: hidden;
+        }
+
+        .audio-progress-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--primary-light) 100%);
+            width: 0%;
+            border-radius: 3px;
+            transition: width 0.1s linear;
+        }
+
+        .audio-button {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            cursor: pointer;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition-normal);
+            border: none;
+        }
+
+        .audio-button:hover {
+            transform: scale(1.1);
+            background: var(--primary-dark);
+        }
+
+        .audio-button svg {
+            width: 18px;
+            height: 18px;
+            color: white;
+        }
+        
+        .speed-select {
+            margin-left: 10px;
+            border: none;
+            background: var(--light);
+            padding: 5px;
+            border-radius: 4px;
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 12px;
+            cursor: pointer;
+            transition: var(--transition-normal);
+        }
+
+        .speed-select:hover {
+            background: var(--gray);
+        }
+
+        .speed-select:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(7, 162, 184, 0.3);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.3s ease forwards;
+        }
+
+        .slide-right {
+            animation: slideInRight 0.3s ease forwards;
+        }
+
+        .slide-left {
+            animation: slideInLeft 0.3s ease forwards;
+        }
+
+        .hidden-audio {
+            display: none;
+        }
+
+        /* モバイル対応 */
+        @media (max-width: 480px) {
+            .app-container {
+                margin: 0;
+                border-radius: 0;
+                min-height: 100vh;
+                max-width: 100%;
+            }
+            
+            .chapter-title {
+                font-size: 20px;
+            }
+            
+            .card {
+                height: 220px;
+            }
+            
+            .japanese-text, .english-text {
+                font-size: 20px;
+            }
+        }
+
+        .review-container {
+            padding: 20px;
+            height: 100%;
+            overflow-y: hidden;
+            background-color: white;
+            border-radius: var(--card-radius);
+            box-shadow: var(--shadow-md);
+        }
+        .review-title {
+            text-align: center;
+            color: var(--primary);
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+        .review-title + p {
+            text-align: center;
+            color: var(--dark);
+            margin-bottom: 40px;
+        }
+        .review-pair {
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--gray);
+        }
+        .review-pair:last-child {
+            border-bottom: none;
+        }
+        .review-japanese {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--dark);
+            margin-bottom: 4px;
+        }
+        .review-english {
+            font-size: 14px;
+            font-weight: 400;
+            color: var(--primary-dark);
+        }
+    </style>
+    <script src="js/transition.js"></script>
+</head>
+<body data-chapter-id="3">
+    <div class="app-container" id="app-container">
+        <div class="header">
+            <h1 class="chapter-title" id="chapter-title">1. 現在形(一般動詞)</h1>
+            <button class="menu-button" id="menu-button" title="メニューに戻る">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+
+        <!-- 日本語カード -->
+        <div class="card" id="japanese-card">
+            <div class="card-counter" id="content-order">1/8</div>
+            <div class="card-content">
+                <p class="japanese-text" id="main-content">毎日ごはん食べるよ。</p>
+            </div>
+        </div>
+
+        <!-- 英語カード -->
+        <div class="card" id="english-card" style="display: none;">
+            <div class="card-counter" id="english-content-order">1/8</div>
+            <div class="card-content">
+                <p class="english-text" id="english-main-content">I eat rice every day.</p>
+        </div>
+        <div class="custom-audio-player">
+            <button class="audio-button" id="play-button" title="音声再生">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                </svg>
+            </button>
+            <div class="audio-progress" id="progress-container">
+                <div class="audio-progress-bar" id="progress-bar"></div>
+            </div>
+            <select id="playback-speed" class="speed-select" title="再生速度">
+                <option value="0.7">0.7×</option>
+                <option value="0.8">0.8×</option>
+                <option value="0.9">0.9×</option>
+                <option value="1.0" selected>1.0×</option>
+                <option value="1.1">1.1×</option>
+                <option value="1.2">1.2×</option>
+                <option value="1.5">1.5×</option>
+            </select>
+        </div>
+    </div>
+
+        <!-- ノート -->
+        <div class="note-container" id="note-container" style="display: none;">
+            <p class="note-text" id="note-text"></p>
+        </div>
+
+        <!-- 成功画面 -->
+        <div class="success-container" id="success-container"></div>
+
+        <!-- ナビゲーションボタン -->
+        <div class="navigation" id="arrow-navigation" style="display: none;">
+            <button class="arrow-button left-arrow" id="back-button" title="前のカードに戻る">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+            </button>
+            <button class="restart-button" id="restart-button" title="もう一度">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+                    <path d="M3 3v5h5"></path>
+                </svg>
+                <span>もう一度</span>
+            </button>
+            <button class="arrow-button" id="next-button" title="次へ">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+            </button>
+        </div>
+
+        <!-- 終了ボタン -->
+        <div class="navigation" id="finish-navigation" style="display: none;">
+            <button class="finish-button restart-chapter-button" id="restart-chapter-button">もう一度</button>
+            <button class="finish-button" id="finish-button">問題を修了する</button>
+            <button class="finish-button" id="next-title-button" style="display: none;">次のタイトル</button>
+        </div>
+
+        <!-- 非表示オーディオ要素 -->
+        <audio id="audio-element" class="hidden-audio"></audio>
+    </div>
+
+    <script>
+    
+        // データモデル
+        const lessonData = createLessonSentenceJson('generalVerbPresentTense');
+        const japaneseModelContent = lessonData.japaneseModelContent;
+        const englishModelContent = lessonData.englishModelContent;
+        const titleToAudioFolder = {"1. 第一文型": "pattern1", "2. 第二文型": "pattern2", "3. 第三文型": "pattern3", "4. 命令文": "order", "1. 時間を表す副詞": "timeAdverb", "2. 場所を表す副詞": "placeAdverb", "3. どれくらいを表す副詞": "muchAdverb", "4. どのようにを表す副詞": "howAdverb", "5. 副詞を置く順番": "orderAdverb", "6. 頻度を表す副詞": "frequencyAdverb", "7. 強調を表す副詞 (形容詞修飾)": "emphasis1Adverb", "8. 強調を表す副詞 (動詞修飾)": "emphasis2Adverb", "9. 態度を表す副詞": "attitudeAdverb", "1. 現在形(一般動詞)": "generalVerbPresentTense", "2. 現在形(be動詞)": "beVerbPresentTense", "3. 過去形(be動詞)": "beVerbPastTense", "4. 過去形(一般動詞)": "generalVerbPastTense", "5. 現在進行形(肯定文)": "affirmativeSentenceContinuousTense", "6. 現在進行形(否定文)": "negativeSentenceContinuousTense", "7. willの肯定文": "affirmativeSentenceWill", "8. willの否定文": "negativeSentenceWill", "9. gonnaの肯定文": "gonnapositive", "10. gonnaの否定文": "gonnanegative", "11. 現在完了形肯定文": "havepositive", "12. 現在完了形否定文": "havenegative", "13. 現在完了進行形肯定文": "havebeenpositive", "14. 現在完了進行形否定文": "havebeennegative", "1. can": "can", "2. can't": "cant", "3. could": "could", "4. Can you / could you?": "canyoucouldyou", "5. Can I / Could I?": "canicoldi", "6. would": "would", "7. might": "might", "8. should": "should", "9. must": "must", "10. could've": "couldhave", "11. should've": "shouldhave", "12. must've": "musthave", "13. might've": "mighthave", "1. 現在形の疑問文": "PresentTenseQuestion", "2. 現在進行形の疑問文": "AffirmativeTenseQuestion", "3. 過去形の疑問文": "PastTenseQuestion", "4. 未来形の疑問文": "FutureTenseQuestion", "5. 現在完了の疑問文": "HaveTenseQuestion", "6. 現在完了進行形の疑問文": "HaveBeenTenseQuestion", "7. Whatを使った疑問文1/2": "Questionwhat1", "8. Whatを使った疑問文2/2": "Questionwhat2", "9. Whenを使った疑問文1/2": "Questionwhen1", "10. Whenを使った疑問文2/2": "Questionwhen2", "11. whereを使った疑問文1/2": "Questionwhere1", "12. whereを使った疑問文2/2": "Questionwhere2", "13. Whoを使った疑問文": "Questionwho", "14. Whyを使った疑問文1/2": "Questionwhy1", "15. Whyを使った疑問文2/2": "Questionwhy2", "16. Whichを使った疑問文1/2": "Questionwhich1", "17. Whichを使った疑問文2/2": "Questionwhich2", "18. Whoseを使った疑問文": "Questionwhose", "19. Howを使った疑問文1/2": "Questionhow1", "20. Howを使った疑問文2/2": "Questionhow2", "21. How long1/2": "Questionhowlong1", "22. How long2/2": "Questionhowlong2", "23. How many/much1": "Questionhowmanymuch1", "24. How many/much2": "Questionhowmanymuch2", "25. How often": "Questionhowoften", "26. How many times": "Questionhowmanytimes", "1. to(主語)": "ToSubject", "2. to(目的語)": "ToObject1", "3. to(慣用表現)": "ToObject2", "4. to(補語)": "ToComplement", "5. to(副詞的用法1)": "ToPurpose", "6. to(副詞的用法2)": "ToEmotion", "7. 形容詞的用法": "ToAdjective", "8. ing": "ing", "9. time to": "timeto", "1. And": "and", "2. But": "but", "3. Or": "or", "4. So": "so", "5. After": "after", "6. Before": "before", "7. Because": "because", "8. When": "when", "9. While": "while", "10. If": "if", "11. Even if": "evenif", "12. Even though": "eventhough", "13. Once": "once", "14. Since": "since", "15. Unless/Until": "unlessuntil", "16. Regardless of": "regardlessof", "17. Instead of": "insteadof", "18. During": "during", "19. Without": "without", "20. Every time": "everytime", "21. So that": "sothat", "22. As long as": "aslongas", "23. No matter": "nomatter", "1. 動詞の後のthat": "ThatAsConjunction", "2. 形容詞の後のthat": "ThatAsComplement", "3. 〜thing that": "thingthat", "1. What + SV": "WhatSV", "2. If + SV": "IfSV", "3. When + SV": "WhenSV", "4. Where + SV": "WhereSV", "5. Who + SV": "WhoSV", "6. Which + SV": "WhichSV", "7. Why + SV": "WhySV", "8. How + SV": "HowSV", "9. How to": "HowTo", "1. 関係代名詞that": "ThatPronoun", "2. 関係副詞When": "WhenPronoun", "3. 関係副詞Where": "WherePronoun", "4. 関係代名詞who": "WhoPronoun", "5. 関係代名詞 Which(非制限用法)": "WhichPronoun", "6. 関係副詞Why": "WhyPronoun", "7. 疑問詞ever": "ever", "TRUE": "", "FALSE": "", "8. How to": "", "": ""};
+        const noteContent = {};
+        
+        // 全章横断用のデータ
+        const allTitlesData = ["1. 第一文型", "2. 第二文型", "3. 第三文型", "4. 命令文", "1. 時間を表す副詞", "2. 場所を表す副詞", "3. どれくらいを表す副詞", "4. どのようにを表す副詞", "5. 副詞を置く順番", "6. 頻度を表す副詞", "7. 強調を表す副詞 (形容詞修飾)", "8. 強調を表す副詞 (動詞修飾)", "9. 態度を表す副詞", "1. 現在形(一般動詞)", "2. 現在形(be動詞)", "3. 過去形(be動詞)", "4. 過去形(一般動詞)", "5. 現在進行形(肯定文)", "6. 現在進行形(否定文)", "7. willの肯定文", "8. willの否定文", "9. gonnaの肯定文", "10. gonnaの否定文", "11. 現在完了形肯定文", "12. 現在完了形否定文", "13. 現在完了進行形肯定文", "14. 現在完了進行形否定文", "1. can", "2. can't", "3. could", "4. Can you / could you?", "5. Can I / Could I?", "6. would", "7. might", "8. should", "9. must", "10. could've", "11. should've", "12. must've", "13. might've", "1. 現在形の疑問文", "2. 現在進行形の疑問文", "3. 過去形の疑問文", "4. 未来形の疑問文", "5. 現在完了の疑問文", "6. 現在完了進行形の疑問文", "7. Whatを使った疑問文1/2", "8. Whatを使った疑問文2/2", "9. Whenを使った疑問文1/2", "10. Whenを使った疑問文2/2", "11. whereを使った疑問文1/2", "12. whereを使った疑問文2/2", "13. Whoを使った疑問文", "14. Whyを使った疑問文1/2", "15. Whyを使った疑問文2/2", "16. Whichを使った疑問文1/2", "17. Whichを使った疑問文2/2", "18. Whoseを使った疑問文", "19. Howを使った疑問文1/2", "20. Howを使った疑問文2/2", "21. How long1/2", "22. How long2/2", "23. How many/much1", "24. How many/much2", "25. How often", "26. How many times", "1. to(主語)", "2. to(目的語)", "3. to(慣用表現)", "4. to(補語)", "5. to(副詞的用法1)", "6. to(副詞的用法2)", "7. 形容詞的用法", "8. ing", "9. time to", "1. And", "2. But", "3. Or", "4. So", "5. After", "6. Before", "7. Because", "8. When", "9. While", "10. If", "11. Even if", "12. Even though", "13. Once", "14. Since", "15. Unless/Until", "16. Regardless of", "17. Instead of", "18. During", "19. Without", "20. Every time", "21. So that", "22. As long as", "23. No matter", "1. 動詞の後のthat", "2. 形容詞の後のthat", "3. 〜thing that", "1. What + SV", "2. If + SV", "3. When + SV", "4. Where + SV", "5. Who + SV", "6. Which + SV", "7. Why + SV", "8. How + SV", "9. How to", "1. 関係代名詞that", "2. 関係副詞When", "3. 関係副詞Where", "4. 関係代名詞who", "5. 関係代名詞 Which(非制限用法)", "6. 関係副詞Why", "7. 疑問詞ever", "TRUE", "FALSE", "8. How to", ""]; // 全タイトルの配列
+        const currentTitleIndex = 13; // 現在のタイトルの全体インデックス
+
+        // オーディオファイルのパス
+        const audioModelContent = lessonData.audioModelContent;
+
+        // 要素の取得
+        const japaneseCard = document.getElementById('japanese-card');
+        const englishCard = document.getElementById('english-card');
+        const contentOrder = document.getElementById('content-order');
+        const mainContent = document.getElementById('main-content');
+        const englishContentOrder = document.getElementById('english-content-order');
+        const englishMainContent = document.getElementById('english-main-content');
+        const noteContainer = document.getElementById('note-container');
+        const noteText = document.getElementById('note-text');
+        const successContainer = document.getElementById('success-container');
+        const arrowNavigation = document.getElementById('arrow-navigation');
+        const finishNavigation = document.getElementById('finish-navigation');
+        const backButton = document.getElementById('back-button');
+        const restartButton = document.getElementById('restart-button');
+        const nextButton = document.getElementById('next-button');
+        const finishButton = document.getElementById('finish-button');
+        const restartChapterButton = document.getElementById('restart-chapter-button');
+        const nextTitleButton = document.getElementById('next-title-button'); // 追加: 次のタイトルボタン
+        const audioElement = document.getElementById('audio-element');
+        const playButton = document.getElementById('play-button');
+        const progressContainer = document.getElementById('progress-container');
+        const progressBar = document.getElementById('progress-bar');
+        const menuButton = document.getElementById('menu-button');
+        const playbackSpeedSelect = document.getElementById('playback-speed'); // 追加: 再生速度選択
+// DOM要素の取得（既存の要素に追加）
+        const titleSelection = document.getElementById('title-selection');
+        const titleSearch = document.getElementById('title-search');
+        const chapterFilterButtons = document.getElementById('chapter-filter-buttons');
+        const titleList = document.getElementById('title-list');
+        const selectedCount = document.getElementById('selected-count');
+        const selectAllTitles = document.getElementById('select-all-titles');
+        const clearAllTitles = document.getElementById('clear-all-titles');
+
+        // 変数
+        let order = Object.keys(japaneseModelContent);
+        let onceMore = [];  // やり直しリスト
+        let clickCount = 0;
+        let successCount = 0;
+        let isPlaying = false;
+        let isCardFlipped = false;
+        let isReviewMode = false;  // レビューモードかどうか
+        let currentPlaybackSpeed = 1.0; // 追加: 現在の再生速度
+        // 変数（既存の変数に追加）
+        let selectedTitles = new Set();
+        let currentChapterFilter = 'all';
+
+        // カード履歴を追跡するための配列
+        let cardHistory = [];
+        // 現在のカードインデックス (0から始まる)
+        let currentCardIndex = 0;
+
+        // イベントリスナー
+        japaneseCard.addEventListener('click', showEnglishCard);
+        englishCard.addEventListener('click', function(e) {
+            if (isAudioControlElement(e.target)) {
+                e.stopPropagation();
+                return;
+            }
+            showJapaneseCard();
+        });
+        
+        backButton.addEventListener('click', goBackToPrevious);
+        restartButton.addEventListener('click', restartDeck);
+        nextButton.addEventListener('click', goNext);
+        finishButton.addEventListener('click', goLink);
+        restartChapterButton.addEventListener('click', restartFromCompletion);
+        nextTitleButton.addEventListener('click', goToNextTitle); // 追加: 次のタイトルボタンのイベントリスナー
+        menuButton.addEventListener('click', goHome);
+        
+        // オーディオプレーヤー
+        playButton.addEventListener('click', function(e) {
+            e.stopPropagation();
+            togglePlay();
+        });
+        
+        progressContainer.addEventListener('click', function(e) {
+            e.stopPropagation();
+            seekAudio(e);
+        });
+        
+        // 追加: 再生速度変更イベントリスナー
+        playbackSpeedSelect.addEventListener('change', function(e) {
+            e.stopPropagation();
+            changePlaybackSpeed();
+        });
+        
+        // オーディオ進行状況の更新
+        audioElement.addEventListener('timeupdate', updateProgress);
+        audioElement.addEventListener('ended', function() {
+            isPlaying = false;
+            updatePlayButton();
+        });
+
+        // オーディオコントロール要素かどうかを判定する関数
+        function isAudioControlElement(element) {
+            return (
+                element === playButton || 
+                element === progressContainer || 
+                element === progressBar ||
+                element.closest('.custom-audio-player') !== null
+            );
+        }
+
+        // 初期化
+        function initCard() {
+            // 最初のカードを履歴に追加
+            cardHistory = [order[0]]; // 配列を初期化して最初のカードを追加
+            currentCardIndex = 0;
+            mainContent.textContent = japaneseModelContent[contentOrder.textContent];
+            isReviewMode = false;
+            onceMore = [];
+        }
+
+        // 日本語カードから英語カードへ
+        function showEnglishCard() {
+            // オーディオ状態をリセット
+            resetAudio();
+            
+            // カードアニメーション
+            japaneseCard.style.display = 'none';
+            englishCard.style.display = 'flex';
+            
+            // 英語カードの内容を設定
+            englishContentOrder.textContent = contentOrder.textContent;
+            englishMainContent.textContent = englishModelContent[contentOrder.textContent];
+            
+            // オーディオの設定
+            const currentIndex = parseInt(contentOrder.textContent.split('/')[0]) - 1;
+            if (audioModelContent[currentIndex]) {
+                audioElement.src = audioModelContent[currentIndex];
+            }
+            
+            // ノートがあれば表示
+            if (noteContent[contentOrder.textContent]) {
+                noteContainer.style.display = 'block';
+                noteText.textContent = noteContent[contentOrder.textContent];
+            } else {
+                noteContainer.style.display = 'none';
+            }
+            
+            // ナビゲーションを表示
+            arrowNavigation.style.display = 'flex';
+            
+            isCardFlipped = true;
+            playButton.click(); // 自動再生
+        }
+
+        // 英語カードから日本語カードへ戻る関数
+        function showJapaneseCard() {
+            // オーディオ状態をリセット
+            resetAudio();
+            
+            // カードアニメーション - 日本語カードを表示
+            englishCard.style.display = 'none';
+            japaneseCard.style.display = 'flex';
+            
+            // ナビゲーションは表示したままにする
+            arrowNavigation.style.display = 'flex';
+            
+            isCardFlipped = false;
+        }
+
+        // オーディオをリセットする関数
+        function resetAudio() {
+            if (audioElement) {
+                audioElement.pause();
+                audioElement.currentTime = 0;
+                isPlaying = false;
+                updatePlayButton();
+            }
+        }
+        
+         // 追加: 再生速度を変更する関数
+        function changePlaybackSpeed() {
+            if (!audioElement) return;
+            
+            // セレクトボックスから値を取得
+            const selectedSpeed = parseFloat(playbackSpeedSelect.value);
+            
+            // 再生速度を設定
+            if (!isNaN(selectedSpeed) && selectedSpeed > 0) {
+                audioElement.playbackRate = selectedSpeed;
+                currentPlaybackSpeed = selectedSpeed;
+            }
+        }
+
+
+        // 次のカードへ進む
+        function goNext() {
+            // オーディオを完全にリセット
+            resetAudio();
+            
+            // 通常モード（最初の全カードを進む）
+            if (!isReviewMode) {
+                let arrayOrder = order.indexOf(contentOrder.textContent);
+                
+                if (arrayOrder < order.length - 1) {
+                    // 次の日本語カードを表示
+                    englishCard.style.display = 'none';
+                    japaneseCard.style.display = 'flex';
+                    noteContainer.style.display = 'none';
+                    
+                    // ナビゲーションは非表示にせず、カード表示前も表示しておく
+                    arrowNavigation.style.display = 'flex';
+                    
+                    successCount++;
+                    isCardFlipped = false;
+                    
+                    // 次のコンテンツへ
+                    const nextOrder = order[arrayOrder + 1];
+                    contentOrder.textContent = nextOrder;
+                    mainContent.textContent = japaneseModelContent[nextOrder];
+                    
+                    // カード履歴を更新
+                    currentCardIndex++;
+                    cardHistory = cardHistory.slice(0, currentCardIndex);
+                    cardHistory.push(nextOrder);
+                } else {
+                    // 最後のカードが終わったらレビューモードに移行するか確認
+                    if (onceMore.length > 0) {
+                        // やり直しリストがある場合、レビューモードに入る
+                        isReviewMode = true;
+                        englishCard.style.display = 'none';
+                        japaneseCard.style.display = 'flex';
+                        noteContainer.style.display = 'none';
+                        
+                        isCardFlipped = false;
+                        
+                        // レビューモードの最初のカードを表示
+                        contentOrder.textContent = order[onceMore[0]];
+                        mainContent.textContent = japaneseModelContent[contentOrder.textContent];
+                        
+                        // カード履歴をリセット
+                        cardHistory = [contentOrder.textContent];
+                        currentCardIndex = 0;
+                        
+                        // ナビゲーションを表示
+                        arrowNavigation.style.display = 'flex';
+                    } else {
+                        // やり直しリストがなければ完了画面へ
+                        showSuccessScreen();
+                    }
+                }
+            } 
+            // レビューモード（やり直しリストのカードを進む）
+            else if (isReviewMode) {
+                // 現在のカードをレビューリストから削除
+                onceMore.shift();
+                
+                if (onceMore.length > 0) {
+                    // まだレビューするカードが残っている場合
+                    englishCard.style.display = 'none';
+                    japaneseCard.style.display = 'flex';
+                    noteContainer.style.display = 'none';
+                    
+                    isCardFlipped = false;
+                    
+                    // 次のレビューカードを表示
+                    contentOrder.textContent = order[onceMore[0]];
+                    mainContent.textContent = japaneseModelContent[contentOrder.textContent];
+                    
+                    // カード履歴を更新
+                    currentCardIndex++;
+                    cardHistory.push(contentOrder.textContent);
+                    
+                    // ナビゲーションを表示
+                    arrowNavigation.style.display = 'flex';
+                } else {
+                    // レビューが全て完了した場合
+                    showSuccessScreen();
+                }
+            }
+        }
+
+        // 次のタイトルがあるかチェックする関数（全章横断対応）
+        function checkNextTitle() {
+            return currentTitleIndex < allTitlesData.length - 1;
+        }
+
+        // 2. goToNextTitle関数を修正（全章横断対応）
+        function goToNextTitle() {
+            if (!checkNextTitle()) {
+                console.log('次のタイトルはありません');
+                return;
+            }
+            
+            const nextTitleIndex = currentTitleIndex + 1;
+            const nextTitle = allTitlesData[nextTitleIndex];
+            
+            // audio_folderベースでファイル名を生成（Python側と同じロジック）
+            const audioFolder = titleToAudioFolder[nextTitle];
+            if (audioFolder) {
+                // Python側と同じファイル名生成規則
+                let safeFileName = audioFolder.replace(/\s+/g, '_');
+                safeFileName = safeFileName.replace(/[\\/*?:"<>|]/g, '');
+                const nextUrl = `${safeFileName}.html`;
+                
+                console.log(`次のタイトルへ移動: ${nextTitle} → ${nextUrl} (audio_folder: ${audioFolder})`);
+                window.location.href = nextUrl;
+            } else {
+                console.error('audio_folderが見つかりません:', nextTitle);
+            }
+        }
+
+        // 成功画面を表示
+        function showSuccessScreen() {
+            englishCard.style.display = 'none';
+            japaneseCard.style.display = 'none';
+            noteContainer.style.display = 'none';
+            arrowNavigation.style.display = 'none';
+
+            let reviewHtml = '<div class="review-container">';
+            reviewHtml += '<h2 class="review-title">お疲れ様でした！</h2><p>今習った8個のうちいくつかを声にだして思い出してみよう！</p>';
+            
+            const keys = Object.keys(japaneseModelContent);
+            for (let i = 0; i < keys.length && i < 8; i++) {
+                const key = keys[i];
+                const japaneseText = japaneseModelContent[key];
+                const englishText = englishModelContent[key];
+                reviewHtml += `
+                    <div class="review-pair">
+                        <p class="review-japanese">${japaneseText}</p>
+                        <p class="review-english">${englishText}</p>
+                    </div>
+                `;
+            }
+            reviewHtml += '</div>';
+
+            successContainer.innerHTML = reviewHtml;
+
+            successContainer.style.display = 'block';
+            finishNavigation.style.display = 'flex';
+            
+            // 次のタイトルがあるかチェックして、ボタンの表示を制御（全章横断対応）
+            const hasNextTitle = checkNextTitle();
+            if (nextTitleButton) {
+                nextTitleButton.style.display = hasNextTitle ? 'inline-block' : 'none';
+            }
+            
+            clickCount = 0;
+            successCount = 0;
+            isReviewMode = false;
+        }
+
+        // 前のカードに戻る
+        function goBackToPrevious() {
+            // オーディオを完全にリセット
+            resetAudio();
+            
+            // 履歴内で戻れる場合のみ
+            if (currentCardIndex > 0) {
+                // インデックスを1つ戻す
+                currentCardIndex--;
+                const prevCard = cardHistory[currentCardIndex];
+                
+                englishCard.style.display = 'none';
+                japaneseCard.style.display = 'flex';
+                noteContainer.style.display = 'none';
+                
+                isCardFlipped = false;
+                
+                // 前のカードの内容を表示
+                contentOrder.textContent = prevCard;
+                mainContent.textContent = japaneseModelContent[prevCard];
+                
+                // ナビゲーションを表示
+                arrowNavigation.style.display = 'flex';
+            }
+        }
+
+        // もう一度（カードをやり直しリストに追加）
+        function restartDeck() {
+            // オーディオを完全にリセット
+            resetAudio();
+            playButton.click(); // 自動再生
+        }
+
+        // オーディオ再生のトグル
+        function togglePlay() {
+            if (!audioElement) return;
+            
+            if (isPlaying) {
+                audioElement.pause();
+            } else {
+                // 再生前にエラーをクリア
+                audioElement.onerror = function(e) {
+                    console.error("音声再生エラー:", e);
+                    isPlaying = false;
+                    updatePlayButton();
+                };
+                
+                // 再生速度を設定
+                audioElement.playbackRate = currentPlaybackSpeed;
+                
+                let playPromise = audioElement.play();
+                if (playPromise !== undefined) {
+                    playPromise.catch(e => {
+                        console.error("音声再生エラー:", e);
+                        isPlaying = false;
+                        updatePlayButton();
+                    });
+                }
+            }
+            isPlaying = !isPlaying;
+            updatePlayButton();
+        }
+
+        // 再生ボタンの更新
+        function updatePlayButton() {
+            if (isPlaying) {
+                playButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="6" y="4" width="4" height="16"></rect>
+                    <rect x="14" y="4" width="4" height="16"></rect>
+                </svg>`;
+            } else {
+                playButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                </svg>`;
+            }
+        }
+
+        // プログレスバーの更新
+        function updateProgress() {
+            if (!audioElement || !progressBar) return;
+            
+            // duration が有効かチェック
+            if (isNaN(audioElement.duration) || audioElement.duration === 0) return;
+            
+            const percent = (audioElement.currentTime / audioElement.duration) * 100;
+            progressBar.style.width = `${percent}%`;
+        }
+
+        // オーディオシーク
+        function seekAudio(e) {
+            if (!audioElement || !progressContainer) return;
+            const width = progressContainer.clientWidth;
+            const clickX = e.offsetX;
+            const duration = audioElement.duration;
+            
+            if (!isNaN(duration) && duration > 0) {
+                audioElement.currentTime = (clickX / width) * duration;
+            }
+        }
+
+        // リンク移動
+        function goLink() {
+            window.location.href = "index.html";
+        }
+
+        // メニューへ戻る
+        function goHome() {
+            let chpterId = document.body.getAttribute('data-chapter-id');
+            // インデックスページに戻る（学習中のchapterに遷移）
+            window.location.href = "index.html#chapter" + chpterId;
+        }
+
+        // 完了画面からもう一度開始する関数
+        function restartFromCompletion() {{
+            // オーディオを完全にリセット
+            resetAudio();
+            
+            // 初期状態にリセット
+            isReviewMode = false;
+            onceMore = [];
+            successCount = 0;
+            clickCount = 0;
+            
+            // 最初のカードに戻る
+            const firstOrder = order[0];
+            contentOrder.textContent = firstOrder;
+            mainContent.textContent = japaneseModelContent[firstOrder];
+            
+            // カード履歴をリセット
+            cardHistory = [firstOrder];
+            currentCardIndex = 0;
+            
+            // 画面を初期状態に戻す
+            successContainer.style.display = 'none';
+            finishNavigation.style.display = 'none';
+            englishCard.style.display = 'none';
+            japaneseCard.style.display = 'flex';
+            noteContainer.style.display = 'none';
+            arrowNavigation.style.display = 'none';
+            
+            isCardFlipped = false;
+            
+            console.log('章を最初からやり直します');
+        }}
+
+        // 初期化
+        initCard();
+    
+    </script>
+</body>
+</html>

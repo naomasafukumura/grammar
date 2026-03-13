@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>英語フラッシュカード</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #07A2B8;
+            --primary-light: #58d0e0;
+            --primary-dark: #057a8c;
+            --secondary: #F8B400;
+            --accent: #FF6B6B;
+            --accent-dark: #e55a5a;
+            --dark: #2D3748;
+            --light: #F7FAFC;
+            --gray: #E2E8F0;
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.08);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            font-family: "Noto Sans JP", sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            color: var(--dark);
+            line-height: 1.5;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: var(--shadow-lg);
+            padding: 30px;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-size: 28px;
+            text-align: center;
+        }
+
+        h2 {
+            color: var(--secondary);
+            margin: 25px 0 15px 0;
+            font-size: 22px;
+            border-bottom: 2px solid var(--secondary);
+            padding-bottom: 5px;
+        }
+
+        p {
+            margin-bottom: 20px;
+            text-align: center;
+            color: var(--dark);
+        }
+
+        ul {
+            list-style: none;
+            margin-top: 10px;
+        }
+
+        li {
+            margin-bottom: 12px;
+            background: var(--light);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+        }
+
+        li:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .card-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+        }
+
+        .card-link {
+            flex-grow: 1;
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .video-link {
+            background: var(--accent);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            text-decoration: none;
+            margin-left: 15px;
+            transition: var(--transition);
+            white-space: nowrap;
+        }
+
+        .video-link:hover {
+            background: var(--accent-dark);
+            transform: translateY(-1px);
+        }
+
+        .test-link {
+            background: var(--primary);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            text-decoration: none;
+            margin-left: 15px;
+            transition: var(--transition);
+            white-space: nowrap;
+        }
+
+        .test-link:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+
+        .test-item {
+            background: rgba(7, 162, 184, 0.1);
+        }
+
+        .count {
+            background: var(--primary-light);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 16px;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .chapter-section {
+            margin-bottom: 20px;
+        }
+
+        footer {
+            margin-top: 20px;
+            color: var(--dark);
+            opacity: 0.7;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        @media (max-width: 576px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+            
+            h2 {
+                font-size: 20px;
+            }
+            
+            .card-container {
+                padding: 12px 15px;
+                font-size: 15px;
+                flex-wrap: wrap;
+            }
+            
+            .video-link {
+                margin-top: 8px;
+                margin-left: 0;
+                padding: 4px 10px;
+            }
+            
+            .test-link {
+                margin-top: 8px;
+                margin-left: 0;
+                padding: 4px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>英語フラッシュカード</h1>
+        <p>学習したいカテゴリーを選んでください</p>
+        
+        <div class="chapter-section"><h2>第一章：文型</h2><ul>
+                <li>
+                    <div class="card-container">
+                        <a href="#" class="card-link">全体解説</a>
+                        <a href="https://youtu.be/cD_6IWYtoQ4" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                <li>
+                    <div class="card-container">
+                        <a href="pattern1.html" class="card-link">第一文型</a>
+                        <a href="https://youtu.be/CX0wQYznwRQ" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="pattern2.html" class="card-link">第二文型</a>
+                        <a href="https://youtu.be/FLOCD94p0bo" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="pattern3.html" class="card-link">第三文型</a>
+                        <a href="https://youtu.be/hCAYOtEsxo8" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="order.html" class="card-link">命令文</a>
+                        <a href="https://youtu.be/cD_6IWYtoQ4" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                <li class="test-item">
+                    <div class="card-container">
+                        <a href="test-1.html" class="card-link">テストを受ける</a>
+                        <a href="test-1.html" class="test-link">テスト</a>
+                    </div>
+                </li>
+                </ul></div><div class="chapter-section"><h2>第二章：副詞</h2><ul>
+                <li>
+                    <div class="card-container">
+                        <a href="#" class="card-link">全体解説</a>
+                        <a href="https://youtu.be/IbSqn4axrAs" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                <li>
+                    <div class="card-container">
+                        <a href="timeAdverb.html" class="card-link">時間を表す副詞</a>
+                        <a href="https://youtu.be/AitC9LxJv9Q" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="placeAdverb.html" class="card-link">場所を表す副詞</a>
+                        <a href="https://youtu.be/2FvIn-ihCfM" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="muchAdverb.html" class="card-link">どれくらいを表す副詞</a>
+                        <a href="https://youtu.be/jMcoPJxci_8" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="howAdverb.html" class="card-link">どのようにを表す副詞</a>
+                        <a href="https://youtu.be/h8dHKyC8N8g" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="orderAdverb.html" class="card-link">副詞を置く順番</a>
+                        <a href="https://youtu.be/qDVvFMERbAo" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="frequencyAdverb.html" class="card-link">頻度を表す副詞</a>
+                        <a href="https://youtu.be/Jrs7kM5FOLU" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="emphasis1Adverb.html" class="card-link">強調を表す副詞 (形容詞修飾)</a>
+                        <a href="https://youtu.be/VkjOGFdMekc" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="emphasis2Adverb.html" class="card-link">強調を表す副詞 (動詞修飾)</a>
+                        <a href="https://youtu.be/VkjOGFdMekc" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="attitudeAdverb.html" class="card-link">態度を表す副詞</a>
+                        <a href="https://youtu.be/XNrowwnWfPo" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                <li class="test-item">
+                    <div class="card-container">
+                        <a href="test-2.html" class="card-link">テストを受ける</a>
+                        <a href="test-2.html" class="test-link">テスト</a>
+                    </div>
+                </li>
+                </ul></div><div class="chapter-section"><h2>第三章：時制</h2><ul>
+                <li>
+                    <div class="card-container">
+                        <a href="generalVerbPresentTense.html" class="card-link">現在形(一般動詞)</a>
+                        <a href="https://youtu.be/94OrkVu5p4o" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="beVerbPresentTense.html" class="card-link">現在形(be動詞)</a>
+                        <a href="https://youtu.be/94OrkVu5p4o" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="beVerbPastTense.html" class="card-link">過去形(be動詞)</a>
+                        <a href="https://youtu.be/IldNhLSoEH4" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="generalVerbPastTense.html" class="card-link">過去形(一般動詞)</a>
+                        <a href="https://youtu.be/IldNhLSoEH4" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="affirmativeSentenceContinuousTense.html" class="card-link">現在進行形(肯定文)</a>
+                        <a href="https://youtu.be/GuSafhDhMxw" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="negativeSentenceContinuousTense.html" class="card-link">現在進行形(否定文)</a>
+                        <a href="https://youtu.be/GuSafhDhMxw" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="affirmativeSentenceWill.html" class="card-link">willの肯定文</a>
+                        <a href="https://youtu.be/ghAN7okWosc" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="negativeSentenceWill.html" class="card-link">willの否定文</a>
+                        <a href="https://youtu.be/ghAN7okWosc" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="gonnapositive.html" class="card-link">gonnaの肯定文</a>
+                        <a href="https://youtu.be/SfKLYW2C5pY" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="gonnanegative.html" class="card-link">gonnaの否定文</a>
+                        <a href="https://youtu.be/SfKLYW2C5pY" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="havepositive.html" class="card-link">現在完了形肯定文</a>
+                        <a href="https://youtu.be/I5veqkqnRvY" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="havenegative.html" class="card-link">現在完了形否定文</a>
+                        <a href="https://youtu.be/I5veqkqnRvY" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="havebeenpositive.html" class="card-link">現在完了進行形肯定文</a>
+                        <a href="https://youtu.be/Dh7gT5AXbLU" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="havebeennegative.html" class="card-link">現在完了進行形否定文</a>
+                        <a href="https://youtu.be/Dh7gT5AXbLU" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                <li class="test-item">
+                    <div class="card-container">
+                        <a href="test-3.html" class="card-link">テストを受ける</a>
+                        <a href="test-3.html" class="test-link">テスト</a>
+                    </div>
+                </li>
+                </ul></div><div class="chapter-section"><h2>第四章：助動詞</h2><ul>
+                <li>
+                    <div class="card-container">
+                        <a href="#" class="card-link">全体解説</a>
+                        <a href="https://youtu.be/Z0t0JbneA7g" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                <li>
+                    <div class="card-container">
+                        <a href="can.html" class="card-link">can</a>
+                        <a href="https://youtu.be/fxqR3Y_-oO4" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="cant.html" class="card-link">can't</a>
+                        <a href="https://youtu.be/fxqR3Y_-oO4" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="could.html" class="card-link">could</a>
+                        <a href="https://youtu.be/rf6g2vj34gM" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="canyoucouldyou.html" class="card-link">Can you / could you?</a>
+                        <a href="https://youtu.be/rf6g2vj34gM" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="canicoldi.html" class="card-link">Can I / Could I?</a>
+                        <a href="https://youtu.be/rf6g2vj34gM" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="would.html" class="card-link">would</a>
+                        <a href="https://youtu.be/bXS4TlYGQa8" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="might.html" class="card-link">might</a>
+                        <a href="https://youtu.be/98yFbYqxWeE" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="should.html" class="card-link">should</a>
+                        <a href="https://youtu.be/_PRGedcwOhE" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="must.html" class="card-link">must</a>
+                        <a href="https://youtu.be/UqDtqdB1GpE" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="couldhave.html" class="card-link">could've</a>
+                        <a href="https://youtu.be/uopTlLzBXFg" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="shouldhave.html" class="card-link">should've</a>
+                        <a href="https://youtu.be/29LXL2cLo9A" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="musthave.html" class="card-link">must've</a>
+                        <a href="https://youtu.be/n8W3c26HGck" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="mighthave.html" class="card-link">might've</a>
+                        <a href="https://youtu.be/irRVMwc2GI8" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="wouldhave.html" class="card-link">would've</a>
+                        <a href="https://youtu.be/HKsapibXZpo" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                <li class="test-item">
+                    <div class="card-container">
+                        <a href="test-4.html" class="card-link">テストを受ける</a>
+                        <a href="test-4.html" class="test-link">テスト</a>
+                    </div>
+                </li>
+                </ul></div><div class="chapter-section"><h2>第五章：疑問文</h2><ul>
+                <li>
+                    <div class="card-container">
+                        <a href="#" class="card-link">全体解説</a>
+                        <a href="https://youtu.be/Gsgazm5n8FY" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                <li>
+                    <div class="card-container">
+                        <a href="PresentTenseQuestion.html" class="card-link">現在形の疑問文</a>
+                        <a href="https://youtu.be/a-CXzQ-RvFs" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="AffirmativeTenseQuestion.html" class="card-link">現在進行形の疑問文</a>
+                        <a href="https://youtu.be/867EOs89Umo" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="PastTenseQuestion.html" class="card-link">過去形の疑問文</a>
+                        <a href="https://youtu.be/Uvls3IR7GQA" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="FutureTenseQuestion.html" class="card-link">未来形の疑問文</a>
+                        <a href="https://youtu.be/aY17x3SLvlc" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="HaveTenseQuestion.html" class="card-link">現在完了の疑問文</a>
+                        <a href="https://youtu.be/m-MtDvF-ATU" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="HaveBeenTenseQuestion.html" class="card-link">現在完了進行形の疑問文</a>
+                        <a href="https://youtu.be/IIsskdLRsnk" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="Questionwhat1.html" class="card-link">Whatを使った疑問文1/2</a>
+                        <a href="https://youtu.be/UAhObKLoeC4" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="Questionwhat2.html" class="card-link">Whatを使った疑問文2/2</a>
+                        <a href="https://youtu.be/rpoWL8aLOqw" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="Questionwhen1.html" class="card-link">Whenを使った疑問文1/2</a>
+                        <a href="https://youtu.be/GSLNEKg3rU8" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="Questionwhen2.html" class="card-link">Whenを使った疑問文2/2</a>
+                        <a href="https://youtu.be/SnDxrn7J_eM" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="Questionwhere1.html" class="card-link">whereを使った疑問文1/2</a>
+                        <a href="https://youtu.be/mwPsFsjmfKk" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="Questionwhere.html" class="card-link">whereを使った疑問文2/2</a>
+                        <a href="https://youtu.be/JUjMidkXcFo" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="Questionwho.html" class="card-link">Whoを使った疑問文</a>
+                        <a href="https://youtu.be/UBcOwvXhOUc" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="Quesitonwhy1.html" class="card-link">Whyを使った疑問文1/2</a>
+                        <a href="https://youtu.be/7dEEl3ko4TA" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="Questionwhy2.html" class="card-link">Whyを使った疑問文2/2</a>
+                        <a href="https://youtu.be/GlbeDbZEC7Q" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="Questionwhich1.html" class="card-link">Whichを使った疑問文1/2</a>
+                        <a href="https://youtu.be/ZcpPb27e1T0" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="Questionwhich2.html" class="card-link">Whichを使った疑問文2/2</a>
+                        <a href="https://youtu.be/Td1_M_6fXxg" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="Questionwhose.html" class="card-link">Whoseを使った疑問文</a>
+                        <a href="https://www.youtube.com/watch?v=ihAUUe7-2hU" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="Questionhow1.html" class="card-link">Howを使った疑問文1/2</a>
+                        <a href="https://youtu.be/SXF6KFCNEQY" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="Questionhow2.html" class="card-link">Howを使った疑問文2/2</a>
+                        <a href="https://youtu.be/ULveYH37ge8" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="Questionhowlong1.html" class="card-link">How long1/2</a>
+                        <a href="https://youtu.be/3jrlV1t-sQQ" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="Questionhowlong2.html" class="card-link">How long2/2</a>
+                        <a href="https://youtu.be/PDqAK2gtScQ" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="Questionhowmanymuch1.html" class="card-link">How many/much1</a>
+                        <a href="https://youtu.be/0TJFtsngAk8" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="Questionhowmanymuch2.html" class="card-link">How many/much2</a>
+                        <a href="https://youtu.be/_octhG8lO6M" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="Questionhowoften.html" class="card-link">How often</a>
+                        <a href="https://youtu.be/sf8GSvlIqxs" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="Questionhowmanytimes.html" class="card-link">How many times</a>
+                        <a href="https://youtu.be/TwVLx-GLtRM" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                <li class="test-item">
+                    <div class="card-container">
+                        <a href="test-5.html" class="card-link">テストを受ける</a>
+                        <a href="test-5.html" class="test-link">テスト</a>
+                    </div>
+                </li>
+                </ul></div><div class="chapter-section"><h2>第六章：to不定詞</h2><ul>
+                <li>
+                    <div class="card-container">
+                        <a href="#" class="card-link">全体解説</a>
+                        <a href="https://youtu.be/uGnU8AAlJ5M" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                <li>
+                    <div class="card-container">
+                        <a href="ToSubject.html" class="card-link">to(主語)</a>
+                        <a href="https://youtu.be/tj4WUxsYqWs" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="ToObject1.html" class="card-link">to(目的語)</a>
+                        <a href="https://youtu.be/DTVYuQ9Xp_4" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="ToObject2.html" class="card-link">to(慣用表現)</a>
+                        <a href="https://youtu.be/GpuJ40KpuCc" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="ToComplement.html" class="card-link">to(補語)</a>
+                        <a href="https://youtu.be/raZJ7UFrh8Q" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="ToPurpose.html" class="card-link">to(副詞的用法1)</a>
+                        <a href="https://youtu.be/Dn2mrMSFDIo" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="ToEmotion.html" class="card-link">to(副詞的用法2)</a>
+                        <a href="https://youtu.be/a89j8VPj1eI" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="ToAdjective.html" class="card-link">形容詞的用法</a>
+                        <a href="https://youtu.be/8YPjCrn34Ds" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="ing.html" class="card-link">ing</a>
+                        <a href="https://youtu.be/0xd4q1ONC3o" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="timeto.html" class="card-link">time to</a>
+                        <a href="https://youtu.be/j_jhtxcaBjY" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                <li class="test-item">
+                    <div class="card-container">
+                        <a href="test-6.html" class="card-link">テストを受ける</a>
+                        <a href="test-6.html" class="test-link">テスト</a>
+                    </div>
+                </li>
+                </ul></div>
+
+                <div class="chapter-section"><h2>第七章：接続詞</h2><ul>
+                <li>
+                    <div class="card-container">
+                        <a href="#" class="card-link">全体解説</a>
+                        <a href="https://youtu.be/YpqReyTg8ww" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                <li>
+                    <div class="card-container">
+                        <a href="and.html" class="card-link">And</a>
+                        <a href="https://youtu.be/7p8YfSBTARs" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="but.html" class="card-link">But</a>
+                        <a href="https://youtu.be/cONirf8mlIM" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="or.html" class="card-link">Or</a>
+                        <a href="https://youtu.be/qOXQsfj7SRA" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="so.html" class="card-link">So</a>
+                        <a href="https://youtu.be/ySo9G20IV60" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="after.html" class="card-link">After</a>
+                        <a href="https://youtu.be/dqNbPqgMjGA" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="before.html" class="card-link">Before</a>
+                        <a href="https://youtu.be/NehxhkGYhrM" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="because.html" class="card-link">Because</a>
+                        <a href="https://youtu.be/JjBymFrAxh4" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="when.html" class="card-link">When</a>
+                        <a href="https://youtu.be/hcI5S8vOdbc" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="while.html" class="card-link">While</a>
+                        <a href="https://youtu.be/AmCA2sv1p18" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="if.html" class="card-link">If</a>
+                        <a href="https://youtu.be/_RsZMGeCUAQ" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="evenif.html" class="card-link">Even if</a>
+                        <a href="https://youtu.be/cubE4CT0NqU" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="eventhough.html" class="card-link">Even though</a>
+                        <a href="https://youtu.be/5QQU9V-Fkt8" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="once.html" class="card-link">Once</a>
+                        <a href="https://youtu.be/1V0tXmpdwYI" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="since.html" class="card-link">Since</a>
+                        <a href="https://youtu.be/886rXg0O5rk" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="unlessuntil.html" class="card-link">Unless/Until</a>
+                        <a href="https://youtu.be/RluoVaOzt6I" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="everytime.html" class="card-link">Every time</a>
+                        <a href="https://youtu.be/aq5aIfM7YrM" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="sothat.html" class="card-link">So that</a>
+                        <a href="https://youtu.be/xo2Hhc-uxxU" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="aslongas.html" class="card-link">As long as</a>
+                        <a href="https://youtu.be/0T7ZAkvbX-Q" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="nomatter.html" class="card-link">No matter</a>
+                        <a href="https://youtu.be/2Q6FrbkvPaU" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="regardlessof.html" class="card-link">Regardless of</a>
+                        <a href="https://youtu.be/CbuS3A7ApFc" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="insteadof.html" class="card-link">Instead of</a>
+                        <a href="https://youtu.be/p3fIKTI_x8s" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="during.html" class="card-link">During</a>
+                        <a href="https://youtu.be/q1VmmjqtCjw" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="without.html" class="card-link">Without</a>
+                        <a href="https://youtu.be/MvPHKEoAgE4" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                <li class="test-item">
+                    <div class="card-container">
+                        <a href="test-7.html" class="card-link">テストを受ける</a>
+                        <a href="test-7.html" class="test-link">テスト</a>
+                    </div>
+                </li>
+                </ul></div>
+
+                <div class="chapter-section"><h2>第八章：that</h2><ul>
+                <li>
+                    <div class="card-container">
+                        <a href="#" class="card-link">全体解説</a>
+                        <a href="https://youtu.be/Eu3oIJovQoQ" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                <li>
+                    <div class="card-container">
+                        <a href="ThatAsConjunction.html" class="card-link">動詞の後のthat</a>
+                        <a href="https://youtu.be/vA5Bzkkmq6Q" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="ThatAsComplement.html" class="card-link">形容詞の後のthat</a>
+                        <a href="https://youtu.be/Z6Ok-0GtV4I" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="thingthat.html" class="card-link">〜thing that</a>
+                        <a href="https://youtu.be/sNKrDcM1nVk" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                <li class="test-item">
+                    <div class="card-container">
+                        <a href="test-8.html" class="card-link">テストを受ける</a>
+                        <a href="test-8.html" class="test-link">テスト</a>
+                    </div>
+                </li>
+                </ul></div>
+
+                <div class="chapter-section"><h2>第九章：疑問詞＋SV</h2><ul>
+                <li>
+                    <div class="card-container">
+                        <a href="#" class="card-link">全体解説</a>
+                        <a href="https://youtu.be/Usu4HISBql4" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                <li>
+                    <div class="card-container">
+                        <a href="WhatSV.html" class="card-link">What + SV</a>
+                        <a href="https://youtu.be/I1c_BIe8TSs" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="IfSV.html" class="card-link">If + SV</a>
+                        <a href="https://youtu.be/FeQFauwfTHc" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="WhenSV.html" class="card-link">When + SV</a>
+                        <a href="https://youtu.be/7n1KYh0LzVw" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="WhereSV.html" class="card-link">Where + SV</a>
+                        <a href="https://youtu.be/AoIwLyXiZLA" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="WhoSV.html" class="card-link">Who + SV</a>
+                        <a href="https://youtu.be/g48E8XGenh0" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="WhichSV.html" class="card-link">Which + SV</a>
+                        <a href="https://youtu.be/Bg0KZzam7KY" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="WhySV.html" class="card-link">Why + SV</a>
+                        <a href="https://youtu.be/tYs2J7QL7C8" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="HowTo.html" class="card-link">How to</a>
+                        <a href="https://youtu.be/gl55fykNf0c" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="HowSV.html" class="card-link">How + SV</a>
+                        <a href="https://youtu.be/rn0UuqK5LQ4" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                <li class="test-item">
+                    <div class="card-container">
+                        <a href="test-9.html" class="card-link">テストを受ける</a>
+                        <a href="test-9.html" class="test-link">テスト</a>
+                    </div>
+                </li>
+                </ul></div>
+
+                <div class="chapter-section"><h2>第十章：関係代名詞</h2><ul>
+                <li>
+                    <div class="card-container">
+                        <a href="#" class="card-link">全体解説</a>
+                        <a href="https://youtu.be/sn3etkgt-kc" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                <li>
+                    <div class="card-container">
+                        <a href="ThatPronoun.html" class="card-link">関係代名詞that</a>
+                        <a href="https://youtu.be/g1LPsw1xLi8" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="WhenPronoun.html" class="card-link">関係副詞When</a>
+                        <a href="https://youtu.be/lBYewttVABo" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="WherePronoun.html" class="card-link">関係副詞Where</a>
+                        <a href="https://youtu.be/Ss_X703Mo54" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="WhyPronoun.html" class="card-link">関係副詞Why</a>
+                        <a href="https://youtu.be/K4grdZivHmc" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="WhichPronoun.html" class="card-link">関係代名詞非制限用法</a>
+                        <a href="https://youtu.be/IJ_k_p_gRiM" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="card-container">
+                        <a href="ever.html" class="card-link">疑問詞ever</a>
+                        <a href="https://youtu.be/DDZCpD32hq8" class="video-link" target="_blank">解説動画</a>
+                    </div>
+                </li>
+                <li class="test-item">
+                    <div class="card-container">
+                        <a href="test-10.html" class="card-link">テストを受ける</a>
+                        <a href="test-10.html" class="test-link">テスト</a>
+                    </div>
+                </li>
+                </ul></div>
+    </div>
+    
+    <footer>
+        <p>&copy; 2024 英語フラッシュカード</p>
+    </footer>
+</body>
+</html>

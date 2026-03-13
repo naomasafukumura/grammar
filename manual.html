@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>英語フラッシュカード - マニュアル</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #07A2B8;
+            --primary-light: #58d0e0;
+            --primary-dark: #057a8c;
+            --primary-gradient: linear-gradient(135deg, #07A2B8 0%, #05b8d4 100%);
+            --secondary: #F8B400;
+            --secondary-light: #ffcb40;
+            --secondary-dark: #e69d00;
+            --secondary-gradient: linear-gradient(135deg, #F8B400 0%, #ffcb40 100%);
+            --accent: #FF6B6B;
+            --accent-light: #ff8a8a;
+            --accent-dark: #e55a5a;
+            --dark: #2D3748;
+            --light: #F7FAFC;
+            --gray: #E2E8F0;
+            --gray-light: #F8F9FA;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.05), 0 2px 4px rgba(0,0,0,0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.05), 0 4px 6px -2px rgba(0,0,0,0.025);
+            --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.05), 0 10px 10px -5px rgba(0,0,0,0.02);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --border-radius-sm: 8px;
+            --border-radius-md: 12px;
+            --border-radius-lg: 16px;
+            --spacing-xs: 4px;
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            --spacing-2xl: 48px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f0f4f8 0%, #d9e2ec 100%);
+            font-family: "Noto Sans JP", sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            color: var(--dark);
+            line-height: 1.6;
+            padding: var(--spacing-lg);
+            font-size: 16px;
+            background-size: 100% 100%;
+            background-attachment: fixed;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            background: white;
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-xl);
+            padding: var(--spacing-xl);
+            margin-bottom: var(--spacing-xl);
+            animation: fadeIn 0.6s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--primary-gradient);
+        }
+
+        .back-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            margin-bottom: var(--spacing-xl);
+            transition: var(--transition);
+            font-size: 17px;
+            padding: var(--spacing-sm) var(--spacing-sm);
+            border-radius: var(--border-radius-sm);
+            background-color: rgba(7, 162, 184, 0.05);
+            width: fit-content;
+        }
+
+        .back-link:hover {
+            color: var(--primary-dark);
+            background-color: rgba(7, 162, 184, 0.1);
+            transform: translateX(-3px);
+        }
+
+        .back-link svg {
+            margin-right: var(--spacing-sm);
+            transition: var(--transition);
+        }
+
+        .back-link:hover svg {
+            transform: translateX(-2px);
+        }
+
+        h1 {
+            color: var(--primary);
+            margin-bottom: var(--spacing-2xl);
+            font-size: 32px;
+            text-align: center;
+            padding-bottom: var(--spacing-md);
+            border-bottom: 3px solid var(--primary-light);
+            position: relative;
+            line-height: 1.3;
+        }
+
+        h1::after {
+            content: "";
+            position: absolute;
+            bottom: -3px;
+            left: 30%;
+            width: 40%;
+            height: 3px;
+            background: var(--primary-gradient);
+        }
+
+        h2 {
+            color: var(--primary-dark);
+            margin: var(--spacing-2xl) 0 var(--spacing-lg) 0;
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding-left: var(--spacing-lg);
+            line-height: 1.3;
+        }
+
+        h2::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--primary-gradient);
+            border-radius: var(--border-radius-sm);
+        }
+
+        h2 .section-number {
+            background: var(--primary-gradient);
+            color: white;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: var(--spacing-md);
+            font-size: 18px;
+            box-shadow: var(--shadow-md);
+            position: absolute;
+            left: calc(var(--spacing-lg) + var(--spacing-sm));
+        }
+
+        h2 .section-title {
+            margin-left: 55px;
+        }
+
+        h3 {
+            color: var(--secondary);
+            margin: var(--spacing-xl) 0 var(--spacing-md) 0;
+            font-size: 20px;
+            font-weight: 700;
+            position: relative;
+            padding-left: var(--spacing-md);
+            line-height: 1.4;
+        }
+
+        h3::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            width: 3px;
+            height: 100%;
+            background: var(--secondary-gradient);
+            border-radius: var(--border-radius-sm);
+        }
+
+        p {
+            margin-bottom: var(--spacing-md);
+            color: var(--dark);
+            line-height: 1.8;
+            font-size: 16px;
+        }
+
+        .emphasis {
+            font-weight: 700;
+            color: var(--accent);
+            background: rgba(255, 107, 107, 0.1);
+            padding: 3px 7px;
+            border-radius: var(--border-radius-sm);
+            display: inline-block;
+            line-height: 1.4;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .emphasis:hover {
+            background: rgba(255, 107, 107, 0.15);
+            transform: translateY(-1px);
+        }
+
+        .video-button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: var(--secondary-gradient);
+            color: var(--dark);
+            font-weight: 700;
+            text-align: center;
+            padding: var(--spacing-md) var(--spacing-xl);
+            margin: var(--spacing-xl) auto;
+            border-radius: var(--border-radius-md);
+            text-decoration: none;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+            max-width: 320px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .video-button::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(255,255,255,0.1), rgba(255,255,255,0));
+            transform: translateY(-100%);
+            transition: transform 0.6s;
+        }
+
+        .video-button:hover::before {
+            transform: translateY(0);
+        }
+
+        .video-button:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-2px);
+        }
+
+        .video-button:active {
+            transform: translateY(0);
+        }
+
+        .video-button svg {
+            margin-right: var(--spacing-md);
+            min-width: 24px;
+            transition: var(--transition);
+        }
+
+        .video-button:hover svg {
+            transform: scale(1.2);
+        }
+
+        .accordion-container {
+            margin-top: var(--spacing-lg);
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .accordion-item {
+            margin-bottom: var(--spacing-md);
+            border-radius: var(--border-radius-md);
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+            transition: var(--transition);
+            border: 1px solid var(--gray);
+        }
+        
+        .accordion-header {
+            padding: var(--spacing-md) var(--spacing-lg);
+            background: var(--gray-light);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            transition: var(--transition);
+            border-left: 4px solid var(--primary-light);
+            user-select: none;
+        }
+        
+        .accordion-header:hover {
+            background: rgba(7, 162, 184, 0.05);
+        }
+        
+        .accordion-q {
+            font-weight: 700;
+            color: var(--primary-dark);
+            position: relative;
+            padding-left: var(--spacing-xl);
+            line-height: 1.5;
+            font-size: 17px;
+        }
+        
+        .accordion-q::before {
+            content: "Q";
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-weight: 800;
+            font-size: 20px;
+            top: -2px;
+        }
+        
+        .accordion-icon {
+            font-weight: bold;
+            font-size: 24px;
+            color: var(--primary);
+            transition: var(--transition);
+            line-height: 1;
+            min-width: 24px;
+            text-align: center;
+        }
+        
+        .accordion-content {
+            background: white;
+            padding: 0 var(--spacing-lg);
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+        
+        .accordion-item.active .accordion-content {
+            padding: var(--spacing-md) var(--spacing-lg);
+            max-height: 500px; /* Adjust based on your content */
+            border-left: 4px solid var(--primary-light);
+        }
+        
+        .accordion-item.active .accordion-header {
+            background: rgba(7, 162, 184, 0.05);
+            border-left: 4px solid var(--primary);
+        }
+        
+        .accordion-item:hover {
+            box-shadow: var(--shadow-md);
+        }
+        
+        .accordion-item.active {
+            box-shadow: var(--shadow-md);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .line-button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #06C755 0%, #04a847 100%);
+            color: white;
+            font-weight: 700;
+            text-align: center;
+            padding: var(--spacing-md) var(--spacing-xl);
+            margin: var(--spacing-xl) auto;
+            border-radius: var(--border-radius-md);
+            text-decoration: none;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+            max-width: 320px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .line-button::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(255,255,255,0.1), rgba(255,255,255,0));
+            transform: translateY(-100%);
+            transition: transform 0.6s;
+        }
+
+        .line-button:hover::before {
+            transform: translateY(0);
+        }
+
+        .line-button:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-2px);
+        }
+
+        .line-button:active {
+            transform: translateY(0);
+        }
+
+        .line-button svg {
+            margin-right: var(--spacing-md);
+            min-width: 24px;
+            transition: var(--transition);
+        }
+
+        .line-button:hover svg {
+            transform: scale(1.2);
+        }
+
+        .section {
+            margin-bottom: var(--spacing-2xl);
+            padding-bottom: var(--spacing-xl);
+            border-bottom: 1px solid var(--gray);
+            animation: fadeIn 0.6s ease-out;
+            animation-fill-mode: both;
+        }
+
+        .section:nth-child(1) { animation-delay: 0.1s; }
+        .section:nth-child(2) { animation-delay: 0.2s; }
+        .section:nth-child(3) { animation-delay: 0.3s; }
+        .section:nth-child(4) { animation-delay: 0.4s; }
+        .section:nth-child(5) { animation-delay: 0.5s; }
+        .section:nth-child(6) { animation-delay: 0.6s; }
+
+        ul {
+            list-style-type: none;
+            padding-left: var(--spacing-sm);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        ul li {
+            position: relative;
+            padding-left: var(--spacing-xl);
+            margin-bottom: var(--spacing-sm);
+            line-height: 1.6;
+        }
+        
+        ul li:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 10px;
+            width: 8px;
+            height: 8px;
+            background: var(--primary);
+            border-radius: 50%;
+        }
+
+        footer {
+            margin-top: var(--spacing-xl);
+            color: var(--dark);
+            opacity: 0.7;
+            font-size: 14px;
+            text-align: center;
+            padding: var(--spacing-md);
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: var(--spacing-sm);
+            }
+            
+            .container {
+                padding: var(--spacing-lg);
+                margin-bottom: var(--spacing-lg);
+            }
+            
+            h1 {
+                font-size: 26px;
+                margin-bottom: var(--spacing-xl);
+                padding-bottom: var(--spacing-md);
+            }
+            
+            h2 {
+                font-size: 20px;
+                margin: var(--spacing-xl) 0 var(--spacing-md) 0;
+            }
+
+            h2 .section-number {
+                width: 32px;
+                height: 32px;
+                font-size: 16px;
+                left: calc(var(--spacing-md) + var(--spacing-xs));
+            }
+
+            h2 .section-title {
+                margin-left: 45px;
+            }
+
+            h3 {
+                font-size: 18px;
+                margin: var(--spacing-lg) 0 var(--spacing-md) 0;
+            }
+            
+            p {
+                font-size: 15px;
+                line-height: 1.7;
+                margin-bottom: var(--spacing-md);
+            }
+            
+            .video-button, .line-button {
+                padding: var(--spacing-md) var(--spacing-lg);
+                font-size: 16px;
+                margin: var(--spacing-lg) auto;
+                width: 100%;
+            }
+            
+            .back-link {
+                font-size: 16px;
+                margin-bottom: var(--spacing-lg);
+            }
+            
+            .faq-question {
+                font-size: 16px;
+            }
+            
+            .faq-item {
+                padding: var(--spacing-md);
+                margin-bottom: var(--spacing-lg);
+            }
+
+            .section {
+                margin-bottom: var(--spacing-xl);
+                padding-bottom: var(--spacing-lg);
+            }
+
+            ul li {
+                padding-left: var(--spacing-lg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M19 12H5"></path>
+                <path d="M12 19l-7-7 7-7"></path>
+            </svg>
+            ホームに戻る
+        </a>
+        
+        <h1>英語フラッシュカード - 解説</h1>
+        
+        <div class="section">
+            <h2><span class="section-number">1</span><span class="section-title">教材の概要</span></h2>
+            <p>こちらの教材は中学英文法をマスターするための教材です。</p>
+            <p>詳しい教材解説はこちらの動画で行っていますので、ご確認ください。</p>
+            
+            <a href="https://www.loom.com/share/df420c9167bd4ea49a73a35682771c53?sid=48100e0a-e977-4bbd-b26d-708b146319b3" target="_blank" class="video-button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                </svg>
+                解説動画を見る
+            </a>
+        </div>
+        
+        <div class="section">
+            <h2><span class="section-number">2</span><span class="section-title">教材の目的/目標</span></h2>
+            <p>この教材は「<span class="emphasis">簡単な文であれば、口からパッと言えるようにする</span>」というのを最も大事にしています。</p>
+            <p>そのため日々の学習で重要視していただきたいのは、「<span class="emphasis">どれだけ早く言えるか</span>」ということです。</p>
+            <p>よくあるあるなのは文を見て5~10秒くらいう〜んと考えてそれで英語を言ってみる方法です。</p>
+            <p>ただ、これだと瞬発性が高まりません。</p>
+            <p>ぜひみなさんには日本語を見たら「<span class="emphasis">2秒で</span>」そしていう時もスピードを重要視して勉強をしていただきたいです！</p>
+            <p>機械的な暗記になってしまっても構いません。</p>
+            <p>それでも日本語が秒で英語にできれば相当な実力が身につきます。</p>
+            <p>ぜひそれを意識して一緒に頑張っていきましょう！</p>
+        </div>
+        
+        <div class="section">
+            <h2><span class="section-number">3</span><span class="section-title">テストについて</span></h2>
+            <p>こちらの教材にはテストを用意しています。</p>
+            <p>このテストはそれぞれの章が終わるたびに用意をしていて、それを受験すると次の章に移ることができます。</p>
+            <p>詳しくは以下の動画をご覧ください。</p>
+            
+            <a href="https://www.loom.com/share/485a3cae49f14a89924339a30d3f6f17?sid=533d747f-36e7-451d-be6e-6b35b25b8115" target="_blank" class="video-button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                </svg>
+                テスト説明動画を見る
+            </a>
+        </div>
+        
+        <div class="section">
+            <h2><span class="section-number">4</span><span class="section-title">よくある質問</span></h2>
+            
+            <div class="accordion-container">
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span class="accordion-q">全てを完璧に言えるようにしないといけないですか？</span>
+                        <span class="accordion-icon">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p>いえ、いくつか覚えにくいものは捨てちゃっても大丈夫です！</p>
+                        <p>テストでは範囲から幅広く出題されますが、別にテストで満点はとらなくてもいいわけです。</p>
+                        <p>もしすごい時間がかかってしまうなら、そのカードは飛ばして、どんどん回転率を上げるほうがより効率的です！</p>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span class="accordion-q">テストの回答が来るまでは次の章に行ってはいけませんか？</span>
+                        <span class="accordion-icon">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p>いえ！そんなことはありません！</p>
+                        <p>テストの回答を添削するのにも時間がかかりますので、結果は待たずに次の章への学習は進めていただいて大丈夫です！</p>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span class="accordion-q">音声を一斉に聴ける聞き流し教材はないですか？</span>
+                        <span class="accordion-icon">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p>そちらは現在作成中となっています。</p>
+                        <p>できるだけ早く作成して、お渡しをいたしますので、よろしくお願いします。</p>
+                    </div>
+                </div>
+            </div>
+            
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    const accordionHeaders = document.querySelectorAll('.accordion-header');
+                    
+                    accordionHeaders.forEach(header => {
+                        header.addEventListener('click', function() {
+                            const item = this.parentElement;
+                            const isActive = item.classList.contains('active');
+                            const icon = this.querySelector('.accordion-icon');
+                            
+                            // Close all items
+                            document.querySelectorAll('.accordion-item').forEach(accordionItem => {
+                                accordionItem.classList.remove('active');
+                                const itemIcon = accordionItem.querySelector('.accordion-icon');
+                                if (itemIcon) itemIcon.textContent = '+';
+                            });
+                            
+                            // If the clicked item wasn't active, open it
+                            if (!isActive) {
+                                item.classList.add('active');
+                                if (icon) icon.textContent = '−';
+                            }
+                        });
+                    });
+                });
+            </script>
+        </div>
+        
+        <div class="section">
+            <h2><span class="section-number">5</span><span class="section-title">他にもなにか質問があれば...</span></h2>
+            <p>こちらの学習法相談LINEの方に以下のような内容をお送りいただけます：</p>
+            <ul>
+                <li>学習法の相談</li>
+                <li>教材の質問</li>
+                <li>教材に関しての要望</li>
+            </ul>
+            <p>これらは遠慮なく送っていただいて大丈夫です！</p>
+            
+            <a href="https://line.me/R/ti/p/@499pamzl?oat_content=url&ts=04091933" target="_blank" class="line-button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2C6.5 2 2 5.8 2 10.5c0 4.1 3.6 7.5 8.5 8.2.3 0 .8.2.9.5.1.3 0 .7 0 .9 0 0-.1.8-.1 1 0 .3.1.7.7.4 3.5-1.9 9.5-5.8 10.9-10 1.1-3.2-1.6-9.5-10.9-9.5zM8 13.6c0 .1-.1.1-.1.1h-2.2c-.1 0-.1 0-.1-.1v-4.5c0-.1.1-.1.1-.1h2.2c.1 0 .1 0 .1.1v4.5zm5.4 0c0 .1-.1.1-.1.1h-2.2c-.1 0-.1 0-.1-.1v-4.5c0-.1.1-.1.1-.1h2.2c.1 0 .1 0 .1.1v4.5zm5.4 0c0 .1-.1.1-.1.1h-2.2c-.1 0-.1 0-.1-.1v-4.5c0-.1.1-.1.1-.1h2.2c.1 0 .1 0 .1.1v4.5z"/>
+                </svg>
+                LINEで相談する
+            </a>
+        </div>
+    </div>
+    
+    <footer>
+        <p>&copy; 2024 英語フラッシュカード</p>
+    </footer>
+</body>
+</html>

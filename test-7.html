@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Chapter 7 テスト</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #07A2B8;
+            --primary-light: #58d0e0;
+            --primary-dark: #057a8c;
+            --secondary: #F8B400;
+            --accent: #FF6B6B;
+            --dark: #2D3748;
+            --light: #F7FAFC;
+            --gray: #E2E8F0;
+            --success: #48BB78;
+            --error: #E53E3E;
+            --card-radius: 16px;
+            --transition-normal: 0.3s ease;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.08);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            font-family: "Noto Sans JP", sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            color: var(--dark);
+            line-height: 1.5;
+            padding: 20px;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 800px;
+            background: linear-gradient(180deg, var(--light) 0%, #EDF2F7 100%);
+            border-radius: 24px;
+            box-shadow: var(--shadow-lg);
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+            margin: 20px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .test-title {
+            color: var(--primary);
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin: 0;
+        }
+
+        .menu-button {
+            background: var(--light);
+            border-radius: 50%;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition-normal);
+            box-shadow: var(--shadow-sm);
+            border: none;
+        }
+
+        .menu-button:hover {
+            background: var(--primary-light);
+            transform: scale(1.05);
+        }
+
+        .menu-button svg {
+            width: 24px;
+            height: 24px;
+            color: var(--primary);
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 8px;
+            background-color: var(--gray);
+            border-radius: 4px;
+            margin-bottom: 24px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--primary-light) 100%);
+            width: 0%;
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        /* 名前入力画面 */
+        .name-screen {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .name-screen h2 {
+            font-size: 22px;
+            margin-bottom: 24px;
+            color: var(--dark);
+        }
+
+        .input-group {
+            width: 100%;
+            margin-bottom: 24px;
+        }
+
+        .input-label {
+            display: block;
+            font-size: 16px;
+            margin-bottom: 8px;
+            color: var(--dark);
+            text-align: left;
+        }
+
+        .text-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--primary-light);
+            border-radius: 8px;
+            font-size: 16px;
+            color: var(--dark);
+            background-color: white;
+            transition: all 0.3s ease;
+        }
+
+        .text-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(7, 162, 184, 0.2);
+        }
+
+        /* 問題画面 */
+        .question-screen {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .question-number {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .question-card {
+            background-color: white;
+            border-radius: var(--card-radius);
+            padding: 24px;
+            margin-bottom: 24px;
+            position: relative;
+            box-shadow: var(--shadow-md);
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+        }
+
+        .japanese-text {
+            font-size: 22px;
+            font-weight: 500;
+            color: var(--dark);
+            margin-bottom: 24px;
+            line-height: 1.4;
+        }
+
+        .answer-container {
+            position: relative;
+            margin-bottom: 12px;
+        }
+
+        .answer-input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid var(--gray);
+            border-radius: 8px;
+            font-size: 18px;
+            color: var(--dark);
+            background-color: white;
+            transition: all 0.3s ease;
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .answer-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(7, 162, 184, 0.2);
+        }
+
+        .button {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition-normal);
+            box-shadow: var(--shadow-sm);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* ボタン無効化状態のスタイル */
+        .button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: translateY(0);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .button svg {
+            margin-left: 8px;
+            width: 20px;
+            height: 20px;
+        }
+
+        .button-secondary {
+            background: linear-gradient(135deg, var(--secondary) 0%, #e0a700 100%);
+        }
+
+        /* 回答確認画面 */
+        .review-screen {
+            flex: 1;
+            display: none;
+            flex-direction: column;
+            animation: fadeIn 0.5s ease;
+            overflow-y: auto;
+            max-height: 70vh;
+        }
+
+        .review-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--primary);
+            text-align: center;
+        }
+
+        .review-list {
+            margin-bottom: 20px;
+            overflow-y: auto;
+        }
+
+        .review-item {
+            background-color: white;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            box-shadow: var(--shadow-sm);
+            position: relative;
+        }
+
+        .review-item.editing {
+            border: 2px solid var(--primary);
+            box-shadow: 0 0 0 3px rgba(7, 162, 184, 0.2);
+        }
+
+        .review-question {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--dark);
+        }
+
+        .review-answer {
+            color: var(--dark);
+            margin-bottom: 8px;
+        }
+
+        /* 既存の review-edit-container を上書き */
+.review-edit-container{
+  display:flex;
+  flex-direction:column;      /* ←まずは縦並び */
+  gap:8px;                    /* 要素間の余白 */
+}
+
+/* テキストエリアが画面幅いっぱいに広がるように */
+.review-edit-input{
+  width:100%;
+}
+
+/* 保存ボタンをやや小さく & 右寄せ */
+.save-edit-button{
+  align-self:flex-end;
+  padding:8px 20px;           /* 好みで調整 */
+  font-size:14px;
+}
+
+/* 画面が広くなったら従来の横並びに戻す */
+@media (min-width:520px){
+  .review-edit-container{
+    flex-direction:row;       /* 横並び */
+    align-items:center;
+  }
+  .save-edit-button{
+    margin-left:8px;          /* 元のレイアウト感に近づける場合 */
+  }
+}
+
+
+        .review-edit-input {
+            flex: 1;
+            padding: 10px 12px;
+            border: 2px solid var(--gray);
+            border-radius: 6px;
+            font-size: 16px;
+            color: var(--dark);
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .review-edit-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .fixed-bottom {
+            position: sticky;
+            bottom: 0;
+            background: linear-gradient(180deg, rgba(255,255,255,0) 0%, var(--light) 20%);
+            padding-top: 20px;
+            margin-top: auto;
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+
+        /* 結果画面 */
+        .result-screen {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .result-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--primary);
+        }
+
+        .result-score {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            color: var(--dark);
+        }
+
+        .result-message {
+            font-size: 18px;
+            margin-bottom: 32px;
+            color: var(--dark);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        /* 送信ステータス表示のスタイル */
+        .submission-status {
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 500;
+            text-align: center;
+            background-color: #f8f9fa;
+            border-left: 3px solid var(--primary);
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .submission-warning {
+            color: var(--error);
+            margin-top: 5px;
+            font-weight: bold;
+        }
+
+        .submission-success {
+            color: var(--success);
+        }
+
+        /* アニメーション */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* モバイル対応 */
+        @media (max-width: 520px) {
+            .app-container {
+                margin: 0;
+                border-radius: 0;
+                min-height: 100vh;
+                max-width: 100%;
+                padding: 16px;
+            }
+            
+            .test-title {
+                font-size: 20px;
+            }
+            
+            .japanese-text {
+                font-size: 20px;
+            }
+            
+            .answer-input {
+                font-size: 16px;
+            }
+
+            .review-screen {
+                max-height: calc(100vh - 160px);
+            }
+            
+            .button-group {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .button {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body data-chapter-id="7">
+    <div class="app-container" id="app-container">
+        <div class="header">
+            <h1 class="test-title" id="test-title">Chapter 7 テスト</h1>
+            <button class="menu-button" id="menu-button" title="メニューに戻る">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+
+        <div class="progress-container" id="progress-container">
+            <div class="progress-bar" id="progress-bar"></div>
+        </div>
+
+        <!-- 名前入力画面 -->
+        <div class="name-screen" id="name-screen">
+            <h2>英語テストへようこそ！</h2>
+            <p>テストを始める前に、お名前を入力してください。</p>
+            
+            <div class="input-group">
+                <label for="fullname" class="input-label">フルネーム</label>
+                <input type="text" id="fullname" class="text-input" placeholder="例）山田 太郎" required>
+            </div>
+            
+            <button class="button" id="start-button">
+                テストを開始する
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+            </button>
+        </div>
+
+        <!-- 問題画面 -->
+        <div class="question-screen" id="question-screen">
+            <div class="question-number" id="question-number">問題 1/20</div>
+            
+            <div class="question-card">
+                <p class="japanese-text" id="japanese-text">ここに日本語の文章が表示されます。</p>
+                
+                <div class="answer-container">
+                    <textarea id="answer-input" class="answer-input" placeholder="英語で答えを入力してください" rows="4"></textarea>
+                </div>
+            </div>
+            
+            <button class="button" id="next-button">
+                次へ
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+            </button>
+        </div>
+
+        <!-- 回答確認画面 -->
+        <div class="review-screen" id="review-screen">
+            <h2 class="review-title">回答確認と修正</h2>
+            
+            <div class="review-list" id="review-list">
+                <!-- ここに回答一覧が動的に追加されます -->
+            </div>
+            
+            <div class="fixed-bottom">
+                <button class="button" id="finish-review-button">
+                    確認完了
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- 結果画面 -->
+        <div class="result-screen" id="result-screen">
+            <h2 class="result-title">テスト完了！</h2>
+            <!-- <p class="result-score" id="result-score">20/20</p> -->
+            <p class="result-message" id="result-message">お疲れ様でした！</p>
+            
+            <div class="button-group">
+                <button class="button" id="submit-button">
+                    結果を提出
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 2v16H8a2 2 0 0 0-2 2v4"></path>
+                        <path d="M18 14v8"></path>
+                        <path d="M15 14v8"></path>
+                        <path d="M8 22H4a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h8"></path>
+                    </svg>
+                </button>
+            </div>
+            
+            <!-- 送信ステータス表示用の要素 -->
+            <div id="submission-status" class="submission-status"></div>
+        </div>
+    </div>
+
+    <script>
+        // テストデータ
+        const testData = {"1. And": [{"japanese": "キッチンを掃除して、洗濯もしたよ。", "english": "I cleaned the kitchen and did the laundry.", "number": "1"}, {"japanese": "お店に行って、牛乳買ってきたよ。", "english": "I went to the store and got some milk.", "number": "2"}, {"japanese": "シャワー浴びて、寝たよ。", "english": "I took a shower and went to bed.", "number": "3"}, {"japanese": "服を畳んで、しまったよ。", "english": "I folded the clothes and put them away.", "number": "4"}, {"japanese": "お母さんに電話して、1時間くらい話したよ。", "english": "I called my mom and talked for an hour.", "number": "5"}, {"japanese": "フルーツを切って、サラダ作ったよ。", "english": "I cut some fruit and made a salad.", "number": "6"}, {"japanese": "窓を開けて、新鮮な空気を入れたよ。", "english": "I opened the window and let fresh air in.", "number": "7"}, {"japanese": "手紙を書いて、友達に送ったよ。", "english": "I wrote a letter and sent it to my friend.", "number": "8"}], "2. But": [{"japanese": "家を掃除したけど、まだ散らかってる。", "english": "I cleaned the house, but it's still messy.", "number": "1"}, {"japanese": "昼寝したいけど、忙しすぎる。", "english": "I want to take a nap, but I'm too busy.", "number": "2"}, {"japanese": "電話したけど、出なかったね。", "english": "I tried to call you, but you didn't answer.", "number": "3"}, {"japanese": "このワンピース買ったけど、大きすぎたよ。", "english": "I bought this dress, but it's too big.", "number": "4"}, {"japanese": "テレビ見たいけど、リモコンがない。", "english": "I want to watch TV, but the remote is missing.", "number": "5"}, {"japanese": "コーヒー入れようと思ったけど、切らしてた。", "english": "I was going to make coffee, but we ran out.", "number": "6"}, {"japanese": "出かけたいけど、雨降ってるんだよね。", "english": "I want to go out, but it's raining.", "number": "7"}, {"japanese": "卵は買ったけど、牛乳を買い忘れた。", "english": "I bought eggs, but I forgot to buy the milk.", "number": "8"}], "3. Or": [{"japanese": "今コーヒー飲んで、じゃないと冷めちゃうよ。", "english": "Drink your coffee now, or it'll get cold.", "number": "1"}, {"japanese": "傘持っていって、じゃないと濡れるよ。", "english": "Take an umbrella, or you'll get wet.", "number": "2"}, {"japanese": "今起きて、じゃないとバスに乗り遅れるよ。", "english": "Wake up now, or you'll miss the bus.", "number": "3"}, {"japanese": "携帯充電して、じゃないとすぐスマホのバッテリー切れるよ。", "english": "Charge your phone, or the phone will die soon.", "number": "4"}, {"japanese": "静かにして、じゃないと赤ちゃん起きちゃうよ。", "english": "Be quiet, or the baby will wake up.", "number": "5"}, {"japanese": "宿題終わらせて、そうしないとテレビなしね。", "english": "Finish your homework, or no TV.", "number": "6"}, {"japanese": "窓閉めて、そうしないと虫入ってくるよ。", "english": "Close the window, or bugs will come in.", "number": "7"}, {"japanese": "急いで、じゃないと遅れるよ！", "english": "Hurry up, or we’ll be late!", "number": "8"}], "4. So": [{"japanese": "疲れてたから、早めに寝たよ。", "english": "I was tired, so I went to bed early.", "number": "1"}, {"japanese": "頭痛があったから、昨日は仕事には行かなかったよ。", "english": "I had a headache, so I didn't go to work yesterday.", "number": "2"}, {"japanese": "財布を忘れたから、何も買えなかったよ。", "english": "I forgot my wallet, so I couldn't buy anything.", "number": "3"}, {"japanese": "目覚ましかけ忘れたから、寝坊しちゃった。", "english": "I forgot to set the alarm, so I overslept.", "number": "4"}, {"japanese": "時間がなかったから、夜ご飯を買ったよ。", "english": "I had no time, so I bought dinner.", "number": "5"}, {"japanese": "雨だから今日は家にいるね。", "english": "It's raining, so I'll stay home today.", "number": "6"}, {"japanese": "暇だから、あなたのこと手伝えるよ。", "english": "I'm free, so I can help you.", "number": "7"}, {"japanese": "遅いから寝ようか。", "english": "It's late, so let's go to bed.", "number": "8"}], "5. After": [{"japanese": "掃除が終わったら買い物に行くね。", "english": "I'll go shopping after I finish cleaning.", "number": "1"}, {"japanese": "夕飯の後にお風呂入るね。", "english": "I'll take a bath after dinner.", "number": "2"}, {"japanese": "帰ってきたら話そうよ。", "english": "Let's talk after you come back home.", "number": "3"}, {"japanese": "娘が寝たらゆっくりするね。", "english": "I'll relax after my daughter sleeps.", "number": "4"}, {"japanese": "着いたらメールするね。", "english": "I'll text you after I arrive.", "number": "5"}, {"japanese": "片付け終わったらデザート食べよう。", "english": "Let's eat dessert after we clean up.", "number": "6"}, {"japanese": "みんな寝た後にいつも英語を勉強するよ。", "english": "I always study English after everyone sleeps.", "number": "7"}, {"japanese": "宿題が終わったあとゲームしてもいいよ。", "english": "You can play games after you finish homework.", "number": "8"}], "6. Before": [{"japanese": "テレビ見る前におやつ食べるよ。", "english": "I eat snacks before watching TV.", "number": "1"}, {"japanese": "運動の前にストレッチするよ。", "english": "I stretch before exercise.", "number": "2"}, {"japanese": "出かける前に植物に水をあげるよ。", "english": "I water plants before going out.", "number": "3"}, {"japanese": "朝ごはんの前に顔を洗うよ。", "english": "I wash my face before breakfast.", "number": "4"}, {"japanese": "お客さんが来る前にリビングを片付けるよ。", "english": "I tidy up the living room before guests come.", "number": "5"}, {"japanese": "子どもが帰る前に夕飯の準備をするよ。", "english": "I prepare dinner before kids return home.", "number": "6"}, {"japanese": "寝る前に電気を消すよ。", "english": "I turn off the lights before bed.", "number": "7"}, {"japanese": "買い物の前に冷蔵庫をチェックするよ。", "english": "I check the fridge before shopping.", "number": "8"}], "7. Because": [{"japanese": "風邪ひいちゃったから、昨日は仕事を休んだよ。", "english": "I didn't go to work yesterday because I had a cold.", "number": "1"}, {"japanese": "古いのが壊れたから新しいフライパン買ったよ。", "english": "I bought a new pan because the old one broke.", "number": "2"}, {"japanese": "明日5時起きだから早く寝たよ。", "english": "I went to bed early because I have to get up at 5 tomorrow.", "number": "3"}, {"japanese": "遅れそうだったからタクシー使ったよ。", "english": "I took a taxi because I was running late.", "number": "4"}, {"japanese": "映画がすごく感動的だったから泣いちゃったよ。", "english": "I cried because the movie was so touching.", "number": "5"}, {"japanese": "運転中だったから電話出なかったよ。", "english": "I didn't answer your call because I was driving.", "number": "6"}, {"japanese": "彼が嘘ついたから怒ったんだよね。", "english": "I got angry because he lied to me.", "number": "7"}, {"japanese": "高かったからそのワンピース買わなかったよ。", "english": "I didn't buy the dress because it was expensive.", "number": "8"}], "8. When": [{"japanese": "本を読むと眠くなるよ。", "english": "I get sleepy when I read a book.", "number": "1"}, {"japanese": "起きたら、いつも携帯チェックするんだ。", "english": "When I wake up, I always check my phone.", "number": "2"}, {"japanese": "仕事が終わったら飲みに行こうよ。", "english": "Let's go for a drink when we finish work.", "number": "3"}, {"japanese": "暇なとき、メッセージ送って。", "english": "Text me when you have time.", "number": "4"}, {"japanese": "家に着いたら電話ちょうだい。", "english": "Call me when you get home.", "number": "5"}, {"japanese": "忙しいときは朝ごはんは食べないよ。", "english": "When I'm busy, I skip breakfast.", "number": "6"}, {"japanese": "雨の時は、いつも家にいるよ。", "english": "When it's rainy, I'm always at home.", "number": "7"}, {"japanese": "急いでいる時は、よくスマホを忘れちゃうんだよね。", "english": "When I'm in a rush, I often forget my phone.", "number": "8"}], "9. While": [{"japanese": "その映画見ながら寝落ちしちゃった。", "english": "I fell asleep while watching the movie.", "number": "1"}, {"japanese": "英語を勉強しながら寝落ちしちゃった。", "english": "I fell asleep while studying English.", "number": "2"}, {"japanese": "今日運転中に、コーヒーこぼしちゃった。", "english": "I spilled coffee while driving today.", "number": "3"}, {"japanese": "今日自転車に乗りながら、事故っちゃった。", "english": "I had an accident while cycling today.", "number": "4"}, {"japanese": "音楽を聴きながら、本を読むのが好きなんだ。", "english": "I love reading books while listening to music.", "number": "5"}, {"japanese": "クラシック音楽を聴きながら英語を勉強してるんだ。", "english": "I study English while listening to classical music.", "number": "6"}, {"japanese": "シャワーを浴びてる途中に何か音が聞こえた。", "english": "I heard a sound while taking a shower.", "number": "7"}, {"japanese": "シャワー中に旦那が帰ってきたんだ。", "english": "My husband came back home while I was taking a shower.", "number": "8"}], "10. If": [{"japanese": "セールだったら買うよ。", "english": "I'll buy it if it's on sale.", "number": "1"}, {"japanese": "遅れそうだったら電話するよ。", "english": "I'll call you if I'm late.", "number": "2"}, {"japanese": "雨がやんだら出かけるよ。", "english": "I'll go out if it stops raining.", "number": "3"}, {"japanese": "疲れてたら晩ごはん作るよ。", "english": "I'll cook dinner if you're tired.", "number": "4"}, {"japanese": "寝坊してたら、起こしてあげるよ。", "english": "I'll wake you up if you oversleep.", "number": "5"}, {"japanese": "何か必要だったら電話してね。", "english": "Call me if you need anything.", "number": "6"}, {"japanese": "お腹すいたら言ってね。", "english": "Tell me if you're hungry.", "number": "7"}, {"japanese": "時間あったら会おうよ。", "english": "If you have time, let's catch up.", "number": "8"}], "11. Even if": [{"japanese": "雨が降ってても、買い物には行くよ。", "english": "Even if it's raining, I go shopping.", "number": "1"}, {"japanese": "忙しくてもメッセージは確認するよ。", "english": "Even if I'm busy, I'll check my messages.", "number": "2"}, {"japanese": "日曜でも早起きするよ。", "english": "I wake up early even if it's Sunday.", "number": "3"}, {"japanese": "お腹いっぱいでもデザートは食べちゃうよ。", "english": "Even if I'm full, I eat dessert.", "number": "4"}, {"japanese": "寒くてもアイスコーヒー飲むよ。", "english": "Even if it's cold, I drink iced coffee.", "number": "5"}, {"japanese": "疲れててもついインスタ見ちゃうんだよね。", "english": "Even if I'm tired, I end up checking Instagram.", "number": "6"}, {"japanese": "忙しくても行くよ。", "english": "Even if I'm busy, I'll come.", "number": "7"}, {"japanese": "失敗しても、もう一回挑戦するよ。", "english": "Even if I fail, I'll try again.", "number": "8"}], "12. Even though": [{"japanese": "ダイエット中なのにケーキ食べちゃった。", "english": "I ate cake even though I'm on a diet.", "number": "1"}, {"japanese": "遅いのにコーヒー飲んじゃったよ。", "english": "I drank coffee even though it's late.", "number": "2"}, {"japanese": "たくさん持ってるのにまたバッグ買っちゃった。", "english": "I bought another bag even though I have many.", "number": "3"}, {"japanese": "忙しいのに昼寝しちゃったよ。", "english": "I took a nap even though I'm busy.", "number": "4"}, {"japanese": "もうすぐ夜ご飯なのにお菓子食べちゃった。", "english": "I ate snacks even though it’s almost dinner time.", "number": "5"}, {"japanese": "残り物あるのにピザ頼んじゃったんだ。", "english": "I ordered pizza even though we had leftovers.", "number": "6"}, {"japanese": "夜中なのにラーメン食べちゃった。", "english": "I ate ramen even though it's midnight.", "number": "7"}, {"japanese": "平日なのにワイン飲んじゃった。", "english": "I had wine even though it's a weekday.", "number": "8"}], "13. Once": [{"japanese": "仕事が終わったら電話するね。", "english": "Once I finish work, I'll call you.", "number": "1"}, {"japanese": "一回やってみたら、きっと気に入るよ。", "english": "Once you try it, you'll love it.", "number": "2"}, {"japanese": "映画が始まったら、話せないよ。", "english": "Once the movie starts, you can't talk.", "number": "3"}, {"japanese": "ポテチ食べたら止まらないよ。", "english": "Once I eat chips, I can't stop.", "number": "4"}, {"japanese": "インスタ開いたら時間あっという間だよ。", "english": "Once I open Instagram, time flies.", "number": "5"}, {"japanese": "YouTube開いたらずっと見ちゃうよ。", "english": "Once I open YouTube, I keep watching.", "number": "6"}, {"japanese": "買い物始めると買いすぎちゃうよ。", "english": "Once I start shopping, I buy too much.", "number": "7"}, {"japanese": "片付け始めると止まらなくなるんだよね。", "english": "Once I start organizing, I can't stop.", "number": "8"}], "14. Since": [{"japanese": "せっかく時間あったからクッキー焼いたよ。", "english": "I baked cookies since I had free time.", "number": "1"}, {"japanese": "せっかく天気いいから買い物に行ったよ。", "english": "I went shopping since the weather was nice.", "number": "2"}, {"japanese": "せっかく君の誕生日だから、何か特別なことしようよ！", "english": "Since it's your birthday, let's do something special!", "number": "3"}, {"japanese": "せっかく時間があるし、映画でも観ようよ。", "english": "Since we have some free time, let's watch a movie.", "number": "4"}, {"japanese": "去年からずっと在宅勤務してるよ。", "english": "I've been working from home since last year.", "number": "5"}, {"japanese": "去年からずっと、車を運転してないんだよね。", "english": "I haven't driven a car since last year.", "number": "6"}, {"japanese": "高校生以来ずっと英語勉強してるよ。", "english": "I've been studying English since I was a high school student.", "number": "7"}, {"japanese": "結婚してからずっとここに住んでるんだ。", "english": "I've been living here since I got married.", "number": "8"}], "15. Unless/Until": [{"japanese": "晴れてないと出かけないよ。", "english": "I won't go out unless it's sunny.", "number": "1"}, {"japanese": "セールじゃなきゃ買わないよ。", "english": "I won't buy it unless it's on sale.", "number": "2"}, {"japanese": "温めないと食べられないよ。", "english": "You can't eat this unless you heat it.", "number": "3"}, {"japanese": "電気を消さないと眠れないよ。", "english": "I won't sleep unless the lights are off.", "number": "4"}, {"japanese": "彼女も来ないと参加しないかな", "english": "I won't join unless she comes too.", "number": "5"}, {"japanese": "面白くないと観ないよ。", "english": "I won't watch it unless it's funny.", "number": "6"}, {"japanese": "揚げてないと彼は野菜食べないよ。", "english": "He doesn’t eat veggies unless they’re fried.", "number": "7"}, {"japanese": "誰か一緒じゃないと行かないよ。", "english": "I won't go unless someone comes with me.", "number": "8"}], "16. Regardless of": [{"japanese": "値段に関係なく買うよ。", "english": "I'll buy it regardless of the price.", "number": "1"}, {"japanese": "時間に関係なく散歩に行くよ。", "english": "I'll go for a walk regardless of the time.", "number": "2"}, {"japanese": "散らかり具合に関係なく家を掃除するよ。", "english": "I'll clean the house regardless of the mess.", "number": "3"}, {"japanese": "メニューに関係なく晩ごはんを食べるよ。", "english": "I'll eat dinner regardless of the menu.", "number": "4"}, {"japanese": "予定に関係なく休憩するよ。", "english": "I'll take a break regardless of my schedule.", "number": "5"}, {"japanese": "曜日に関係なく早起きするよ。", "english": "I'll wake up early regardless of the day.", "number": "6"}, {"japanese": "距離に関係なく両親に会いに行くよ。", "english": "I'll visit my parents regardless of the distance.", "number": "7"}, {"japanese": "年齢に関係なく英語を勉強するよ。", "english": "I'll study English regardless of my age.", "number": "8"}], "17. Instead of": [{"japanese": "バスに乗る代わりに歩くよ。", "english": "I'll walk instead of taking the bus.", "number": "1"}, {"japanese": "外食する代わりに家で料理するよ。", "english": "I'll cook at home instead of eating out.", "number": "2"}, {"japanese": "炭酸飲料の代わりに水を飲むよ。", "english": "I'll drink water instead of soda.", "number": "3"}, {"japanese": "ビニール袋の代わりに自分のバッグを使うよ。", "english": "I'll use my bag instead of a plastic one.", "number": "4"}, {"japanese": "テレビを見る代わりにキッチンを掃除するよ。", "english": "I'll clean the kitchen instead of watching TV.", "number": "5"}, {"japanese": "スマホを見る代わりに本を読むよ。", "english": "I'll read a book instead of checking my phone.", "number": "6"}, {"japanese": "シャワーの代わりにお風呂に入るよ。", "english": "I'll take a bath instead of a shower.", "number": "7"}, {"japanese": "メッセージを送る代わりに電話するよ。", "english": "I'll call instead of texting.", "number": "8"}], "18. During": [{"japanese": "映画の間に寝ちゃったよ。", "english": "I fell asleep during the movie.", "number": "1"}, {"japanese": "休憩中におやつ食べたよ。", "english": "I had a snack during the break.", "number": "2"}, {"japanese": "ランチの間に友達と話してたよ。", "english": "I talked to my friend during lunch.", "number": "3"}, {"japanese": "午後にちょっと昼寝したよ。", "english": "I took a nap during the afternoon.", "number": "4"}, {"japanese": "講義の間に眠くなっちゃった。", "english": "I felt sleepy during the lecture.", "number": "5"}, {"japanese": "空いた時間に買い物行ってきたよ。", "english": "I went shopping during my free time.", "number": "6"}, {"japanese": "夜中に変な音が聞こえたよ。", "english": "I heard a strange noise during the night.", "number": "7"}, {"japanese": "仕事中にお母さんから電話きたよ。", "english": "I got a call from my mom during work.", "number": "8"}], "19. Without": [{"japanese": "コーヒーなしじゃ一日を始められないよ。", "english": "I can't start my day without coffee.", "number": "1"}, {"japanese": "スマホなしじゃ外に出られないよ。", "english": "I don't go out without my phone.", "number": "2"}, {"japanese": "レシピなしじゃ料理できないよ。", "english": "I can't cook without a recipe.", "number": "3"}, {"japanese": "鍵なしじゃ家を出られないよ。", "english": "I can't leave the house without my keys.", "number": "4"}, {"japanese": "マスクなしじゃ落ち着かないよ。", "english": "I don't feel safe without a mask.", "number": "5"}, {"japanese": "メガネなしじゃ運転できないよ。", "english": "I can't drive without my glasses.", "number": "6"}, {"japanese": "カレーはご飯なしじゃ食べられないよ。", "english": "I can't eat curry without rice.", "number": "7"}, {"japanese": "砂糖なしのお茶は好きじゃないよ。", "english": "I don't like tea without sugar.", "number": "8"}], "20. Every time": [{"japanese": "面接のたびに緊張するんだ。", "english": "I get nervous every time I have an interview.", "number": "1"}, {"japanese": "子どもが笑うたびに幸せな気持ちになるよ。", "english": "I feel happy every time I see my kids smile.", "number": "2"}, {"japanese": "買い物に行くたびにお母さんに電話するよ。", "english": "I call my mom every time I go shopping.", "number": "3"}, {"japanese": "家に帰るたびに手を洗ってるよ。", "english": "I wash my hands every time I come home.", "number": "4"}, {"japanese": "この映画を見るたびに泣いちゃうんだよね。", "english": "I cry every time I watch this movie.", "number": "5"}, {"japanese": "旅行のたびに何か忘れ物しちゃうんだ。", "english": "I forget something every time I travel.", "number": "6"}, {"japanese": "本を読むたびに眠くなるよ。", "english": "I get sleepy every time I read a book.", "number": "7"}, {"japanese": "家を掃除するたびに疲れちゃう。", "english": "I feel tired every time I clean the house.", "number": "8"}], "21. So that": [{"japanese": "理解できるように、ゆっくり話してくれますか?", "english": "Could you speak slowly so that I can understand?", "number": "1"}, {"japanese": "忘れないようにメモしてるよ。", "english": "I write things down so that I don't forget.", "number": "2"}, {"japanese": "電車に乗り遅れないように早めに出たよ。", "english": "I left early so that I wouldn't miss the train.", "number": "3"}, {"japanese": "時間通りに起きられるようにアラームをセットしたよ。", "english": "I set an alarm so that I can wake up on time.", "number": "4"}, {"japanese": "新鮮な空気が入るように窓を開けたよ。", "english": "I opened the window so that fresh air could come in.", "number": "5"}, {"japanese": "健康を維持できるように毎日運動してるよ。", "english": "I exercise every day so that I can stay healthy.", "number": "6"}, {"japanese": "新しいスマホを買えるようにお金を貯めたよ。", "english": "I saved money so that I could buy a new phone.", "number": "7"}, {"japanese": "何を着るか分かるように天気予報をチェックしたよ。", "english": "I checked the weather so that I would know what to wear.", "number": "8"}], "22. As long as": [{"japanese": "家族が健康でいるなら、私は幸せだよ。", "english": "I'm happy as long as my family is healthy.", "number": "1"}, {"japanese": "好きなだけここにいていいよ。", "english": "You can stay here as long as you want.", "number": "2"}, {"japanese": "雨が降らない限り、ピクニックできるよ。", "english": "As long as it doesn't rain, we can have a picnic.", "number": "3"}, {"japanese": "全力で頑張るなら、私は応援するよ。", "english": "I'll support you as long as you try your best.", "number": "4"}, {"japanese": "コーヒーさえあれば、早起きできるよ。", "english": "As long as I have coffee, I can wake up early.", "number": "5"}, {"japanese": "服が着心地よければ、ブランドにはこだわらないよ。", "english": "I don't care about brands as long as the clothes are comfortable.", "number": "6"}, {"japanese": "寒すぎない限り、外に出るよ。", "english": "I'll go out as long as it's not too cold.", "number": "7"}, {"japanese": "子どもが幸せなら、それで満足だよ。", "english": "As long as my kids are happy, I'm satisfied.", "number": "8"}], "23. No matter": [{"japanese": "どれだけ忙しくても、君のために時間を作るよ。", "english": "No matter how busy I get, I'll make time for you.", "number": "1"}, {"japanese": "どれだけ疲れていても、寝る前に本を読むよ。", "english": "No matter how tired I am, I always read a book before bed.", "number": "2"}, {"japanese": "どんなに大変でも、諦めないよ。", "english": "No matter how hard it is, I won't give up.", "number": "3"}, {"japanese": "どんなに遅くなっても、待ってるよ。", "english": "No matter how late it gets, I'll wait for you.", "number": "4"}, {"japanese": "何があっても、私はいつでも応援するよ。", "english": "No matter what happens, I'll always support you.", "number": "5"}, {"japanese": "何を作っても、子どもが文句を言うんだよね。", "english": "No matter what I cook, my kids always complain.", "number": "6"}, {"japanese": "何をしても、痩せないよ。", "english": "No matter what I do, I can't lose weight.", "number": "7"}, {"japanese": "何を言っても、旦那が忘れちゃうんだよね。", "english": "No matter what I say, my husband forgets it.", "number": "8"}]};
+        
+        // DOM要素の取得
+        const progressBar = document.getElementById('progress-bar');
+        const nameScreen = document.getElementById('name-screen');
+        const questionScreen = document.getElementById('question-screen');
+        const reviewScreen = document.getElementById('review-screen');
+        const resultScreen = document.getElementById('result-screen');
+        const fullnameInput = document.getElementById('fullname');
+        const startButton = document.getElementById('start-button');
+        const questionNumber = document.getElementById('question-number');
+        const japaneseText = document.getElementById('japanese-text');
+        const answerInput = document.getElementById('answer-input');
+        const nextButton = document.getElementById('next-button');
+        const reviewList = document.getElementById('review-list');
+        const finishReviewButton = document.getElementById('finish-review-button');
+        const resultScore = document.getElementById('result-score');
+        const resultMessage = document.getElementById('result-message');
+        const restartButton = document.getElementById('restart-button');
+        const submitButton = document.getElementById('submit-button');
+        const menuButton = document.getElementById('menu-button');
+        const submissionStatus = document.getElementById('submission-status');
+        
+        // 変数
+        let currentQuestions = [];
+        let currentQuestionIndex = 0;
+        let correctAnswers = 0;
+        let userAnswers = [];
+        let isSubmitting = false; // 送信中フラグ
+        
+        // イベントリスナー
+        document.addEventListener('DOMContentLoaded', function() {
+            // テスト開始ボタン
+            startButton.addEventListener('click', startTest);
+            
+            // 次へボタン
+            nextButton.addEventListener('click', function() {
+                // 回答を記録
+                userAnswers[currentQuestionIndex] = answerInput.value;
+                
+                // 次の問題へ
+                currentQuestionIndex++;
+                
+                // すべての問題が終わったか確認
+                if (currentQuestionIndex >= currentQuestions.length) {
+                    showReviewScreen();  // 問題終了後に回答確認画面を表示
+                } else {
+                    updateProgressBar();
+                    showQuestion(currentQuestionIndex);
+                }
+            });
+            
+            // 確認完了ボタン
+            finishReviewButton.addEventListener('click', function() {
+                showResults();
+            });
+                        
+            // やり直しボタン
+        if (restartButton) {
+            restartButton.addEventListener('click', function() {
+                // 状態をリセット
+                currentQuestionIndex = 0;
+                userAnswers = new Array(currentQuestions.length).fill('');
+                
+                // 問題を再選択 - "all"に変更
+                prepareQuestions("all");
+                
+                // 最初の問題を表示
+                updateProgressBar();
+                showQuestion(currentQuestionIndex);
+                
+                // 画面の切り替え
+                resultScreen.style.display = 'none';
+                questionScreen.style.display = 'flex';
+                
+                // 送信状態をリセット
+                submissionStatus.style.display = 'none';
+                submitButton.disabled = false;
+                isSubmitting = false;
+            });
+        }
+            
+            // 結果提出ボタン（連打防止機能付き）
+            submitButton.addEventListener('click', submitResults);
+            
+            // メニューに戻るボタン
+            menuButton.addEventListener('click', goToMenu);
+            
+            // Enterキーで次へ
+            answerInput.addEventListener('keydown', function(event) {
+                if (event.key === 'Enter' && event.ctrlKey) {
+                    nextButton.click();
+                }
+            });
+
+            // レビュー画面の入力欄でEnterキーで保存
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Enter' && event.ctrlKey) {
+                    const activeElement = document.activeElement;
+                    if (activeElement.classList.contains('review-edit-input')) {
+                        const reviewItem = activeElement.closest('.review-item');
+                        const saveButton = reviewItem.querySelector('.save-edit-button');
+                        saveButton.click();
+                    }
+                }
+            });
+        });
+        
+        // テスト開始
+        function startTest() {
+            // 名前の入力チェック
+            if (!fullnameInput.value.trim()) {
+                alert('お名前を入力してください');
+                return;
+            }
+            
+            // 名前を保存
+            const userName = fullnameInput.value.trim();
+            
+            // 問題を準備 - 常に"all"を使用
+            prepareQuestions("all");
+            
+            // 最初の問題を表示
+            currentQuestionIndex = 0;
+            correctAnswers = 0;
+            userAnswers = new Array(currentQuestions.length).fill('');
+            updateProgressBar();
+            showQuestion(currentQuestionIndex);
+            
+            // 画面の切り替え
+            nameScreen.style.display = 'none';
+            questionScreen.style.display = 'flex';
+        }
+        
+        // 問題の準備
+        function prepareQuestions(titleValue) {
+            let allQuestions = [];
+            
+            // 選択したタイトルに基づいて問題を取得
+            if (titleValue === 'all') {
+                // すべてのタイトルから問題を取得
+                Object.values(testData).forEach(questions => {
+                    allQuestions = allQuestions.concat(questions);
+                });
+                
+                // 問題をシャッフル
+                shuffleArray(allQuestions);
+                
+                // 20問を選択（配列の長さを超えないように）
+                const numQuestions = Math.min(20, allQuestions.length);
+                currentQuestions = allQuestions.slice(0, numQuestions);
+            } else {
+                // 特定のタイトルの問題を取得
+                allQuestions = testData[titleValue] || [];
+                
+                // 問題をシャッフル
+                shuffleArray(allQuestions);
+                
+                // すべての問題を使用
+                currentQuestions = allQuestions;
+            }
+            
+            console.log(`テスト問題: ${currentQuestions.length}問を準備しました`);
+        }
+        
+        // 配列をシャッフルする関数
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+        
+        // 進捗バーの更新
+        function updateProgressBar() {
+            const progress = (currentQuestionIndex / currentQuestions.length) * 100;
+            progressBar.style.width = `${progress}%`;
+        }
+        
+        // 問題を表示
+        function showQuestion(index) {
+            // 範囲外のインデックスをチェック
+            if (index >= currentQuestions.length) {
+                showReviewScreen();
+                return;
+            }
+            
+            // 現在の問題を取得
+            const question = currentQuestions[index];
+            
+            // 問題番号の更新
+            questionNumber.textContent = `問題 ${index + 1}/${currentQuestions.length}`;
+            
+            // 日本語テキストの設定
+            japaneseText.textContent = question.japanese;
+            
+            // 入力フィールドをクリア
+            answerInput.value = userAnswers[index] || '';
+            answerInput.focus();
+        }
+        
+function showReviewScreen() {
+    // 回答一覧をクリア
+    reviewList.innerHTML = '';
+    
+    // 各問題と回答のペアを表示
+    for (let i = 0; i < currentQuestions.length; i++) {
+        const question = currentQuestions[i];
+        const answer = userAnswers[i] || '';
+        
+        const reviewItem = document.createElement('div');
+        reviewItem.className = 'review-item';
+        reviewItem.dataset.index = i;
+        
+        reviewItem.innerHTML = `
+            <div class="review-question">${i + 1}. ${question.japanese}</div>
+            <div class="review-answer">回答: ${answer}</div>
+            <div class="review-edit-container" style="display: none;">
+                <textarea class="review-edit-input">${answer}</textarea>
+                <button class="button button-small button-secondary save-edit-button" style="margin-left: 8px; padding: 8px 16px; font-size: 14px;">保存</button>
+            </div>
+            <button class="button button-small edit-button" style="margin-top: 8px; padding: 8px 16px; font-size: 14px;">修正</button>
+        `;
+        
+        reviewList.appendChild(reviewItem);
+        
+        // ここでは個別にイベントリスナーを追加するコードを削除
+    }
+    
+    // 問題画面を非表示にして回答確認画面を表示
+    questionScreen.style.display = 'none';
+    reviewScreen.style.display = 'flex';
+    
+    // ここに新しく一括イベントリスナー設定コードを追加 ★★★
+    document.querySelectorAll('.edit-button').forEach(button => {
+        button.addEventListener('click', function() {
+            const reviewItem = this.closest('.review-item');
+            const editContainer = reviewItem.querySelector('.review-edit-container');
+            const editInput = reviewItem.querySelector('.review-edit-input');
+            
+            // 編集モードを切り替え
+            reviewItem.classList.add('editing');
+            editContainer.style.display = 'flex';
+            this.style.display = 'none';
+            
+            // フォーカスを入力欄に設定
+            editInput.focus();
+        });
+    });
+    
+    document.querySelectorAll('.save-edit-button').forEach(button => {
+        button.addEventListener('click', function() {
+            const reviewItem = this.closest('.review-item');
+            const index = parseInt(reviewItem.dataset.index);
+            const editInput = reviewItem.querySelector('.review-edit-input');
+            const editContainer = reviewItem.querySelector('.review-edit-container');
+            const editButton = reviewItem.querySelector('.edit-button');
+            const answerDisplay = reviewItem.querySelector('.review-answer');
+            
+            // 回答を更新
+            const newAnswer = editInput.value;
+            userAnswers[index] = newAnswer;
+            
+            // 表示を更新
+            answerDisplay.textContent = `回答: ${newAnswer}`;
+            
+            // 編集モードを解除
+            reviewItem.classList.remove('editing');
+            editContainer.style.display = 'none';
+            editButton.style.display = 'inline-block';
+            
+            // 正誤判定を更新
+            updateScoreAfterEdit();
+        });
+    });
+}
+        
+        
+        
+        // 編集後のスコア再計算
+        function updateScoreAfterEdit() {
+            correctAnswers = 0;
+            
+            for (let i = 0; i < currentQuestions.length; i++) {
+                const correctAnswer = currentQuestions[i].english.trim().toLowerCase();
+                const userAnswer = userAnswers[i].trim().toLowerCase();
+                
+                if (userAnswer === correctAnswer) {
+                    correctAnswers++;
+                }
+            }
+        }
+        
+        // 結果画面を表示
+        // 結果画面を表示
+        function showResults() {
+            // スコアを計算
+            updateScoreAfterEdit();
+            
+            // スコアを表示 - この行をコメントアウト
+            resultMessage.textContent = 'お疲れ様でした！';
+            
+            // 画面を切り替え
+            reviewScreen.style.display = 'none';
+            resultScreen.style.display = 'flex';
+        }
+        
+        // submitResults関数を実際のデータ送信を行うように変更します
+
+        
+        // メニューに戻る// submitResults関数を実際のデータ送信を行うように変更します
+function submitResults() {
+    // 既に送信中の場合は処理をスキップ
+    if (isSubmitting) {
+        return;
+    }
+    
+    // 送信中状態にする
+    isSubmitting = true;
+    
+    // ボタンを無効化
+    submitButton.disabled = true;
+    
+    // 送信中メッセージを表示
+    submissionStatus.style.display = 'block';
+    submissionStatus.innerHTML = `
+        <div>
+            <p>送信中です...。10秒ほど、しばらくお待ちください。</p>
+            <p class="submission-warning">⚠️"結果を提出"ボタンの連打はお控えください！バグが発生します</p>
+        </div>
+    `;
+    
+    // テストデータを準備
+    const answersData = [];
+    for (let i = 0; i < currentQuestions.length; i++) {
+        answersData.push({
+            user: userAnswers[i].trim(),
+            correct: currentQuestions[i].english.trim(),
+            japanese: currentQuestions[i].japanese
+        });
+    }
+    
+    // GASのWebアプリURLを設定（デプロイ後に取得したURL）
+    const gasWebAppURL = 'https://script.google.com/macros/s/AKfycby22oH6WDDAV1HkhLEixncUDVV213t17F-nLLPiCopBKf9kYsDkLbxYnqjCULPr7cKm/exec';
+    
+    // 送信データを準備
+    const testTitleElement = document.getElementById('test-title');
+    const testTitle = testTitleElement ? testTitleElement.textContent : '';
+    
+    const formData = new FormData();
+    formData.append('name', fullnameInput.value);
+    formData.append('timestamp', new Date().toLocaleString());
+    formData.append('testTitle', testTitle);
+    formData.append('answers', JSON.stringify(answersData));
+    
+    // 成功フラグ（タイムアウト対策）
+    let isSubmissionHandled = false;
+    
+    // 成功処理を実行する共通関数
+    function handleSuccess() {
+        if (isSubmissionHandled) return; // 重複実行防止
+        isSubmissionHandled = true;
+        
+        // 送信完了メッセージを表示
+        submissionStatus.innerHTML = `
+            <div>
+                <p class="submission-success">✅ ${fullnameInput.value}さんの結果を記録しました！</p>
+            </div>
+        `;
+        
+        // 10秒後にボタンを再度有効化
+        setTimeout(function() {
+            submitButton.disabled = false;
+            isSubmitting = false;
+        }, 10000);
+    }
+    
+    // エラー処理を実行する共通関数
+    function handleError(errorMessage) {
+        if (isSubmissionHandled) return; // 重複実行防止
+        isSubmissionHandled = true;
+        
+        console.error('送信エラー:', errorMessage);
+        submissionStatus.innerHTML = `
+            <div>
+                <p style="color: var(--error);">❌ 送信中にエラーが発生しました。もう一度お試しください。</p>
+            </div>
+        `;
+        
+        // 5秒後にボタンを再度有効化
+        setTimeout(function() {
+            submitButton.disabled = false;
+            isSubmitting = false;
+        }, 5000);
+    }
+    
+    // タイムアウト設定（8秒後に強制的に成功扱いにする）
+    const timeoutId = setTimeout(function() {
+        console.log('送信タイムアウト - 成功扱いで処理');
+        handleSuccess();
+    }, 8000);
+    
+    // GASにデータを送信
+    fetch(gasWebAppURL, {
+        method: 'POST',
+        body: formData,
+        mode: 'no-cors' // CORS対策
+    })
+    .then(response => {
+        // タイムアウトをクリア
+        clearTimeout(timeoutId);
+        
+        // no-corsモードでは応答が空になるため、成功とみなす
+        console.log('送信レスポンス受信 - 成功扱いで処理');
+        handleSuccess();
+    })
+    .catch(error => {
+        // タイムアウトをクリア
+        clearTimeout(timeoutId);
+        
+        // エラー処理
+        handleError(error);
+    });
+}
+        function goToMenu() {
+            let chpterId = document.body.getAttribute('data-chapter-id');
+            // インデックスページに戻る（学習中のchapterに遷移）
+            window.location.href = "index.html#chapter" + chpterId;
+        }
+    </script>
+    <script src="js/test-persistence.js"></script>
+</body>
+</html>

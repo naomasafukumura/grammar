@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>英語聞き流し</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* CSSスタイルは変更不要のため、既存のスタイルをそのまま継承 */
+        :root {
+            --primary: #07A2B8;
+            --primary-light: #58d0e0;
+            --primary-dark: #057a8c;
+            --secondary: #F8B400;
+            --accent: #FF6B6B;
+            --dark: #2D3748;
+            --light: #F7FAFC;
+            --gray: #E2E8F0;
+            --success: #48BB78;
+            --card-radius: 16px;
+            --transition-normal: 0.3s ease;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.08);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            font-family: "Noto Sans JP", sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            color: var(--dark);
+            line-height: 1.5;
+            padding: 20px;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 600px;
+            background: linear-gradient(180deg, var(--light) 0%, #EDF2F7 100%);
+            border-radius: 24px;
+            box-shadow: var(--shadow-lg);
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .listening-title {
+            color: var(--primary);
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin: 0;
+        }
+
+        .menu-button {
+            background: var(--light);
+            border-radius: 50%;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition-normal);
+            box-shadow: var(--shadow-sm);
+            border: none;
+        }
+
+        .menu-button:hover {
+            background: var(--primary-light);
+            transform: scale(1.05);
+        }
+
+        .menu-button svg {
+            width: 24px;
+            height: 24px;
+            color: var(--primary);
+        }
+
+        /* 設定画面のスタイル（既存スタイルを継承） */
+        .settings-screen {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .settings-card {
+            background-color: white;
+            border-radius: var(--card-radius);
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow-md);
+        }
+
+        .settings-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 16px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: var(--dark);
+        }
+
+        .select-box {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--gray);
+            border-radius: 8px;
+            font-size: 16px;
+            color: var(--dark);
+            background-color: white;
+            transition: all 0.3s ease;
+        }
+
+        .select-box:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(7, 162, 184, 0.2);
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .checkbox {
+            width: 18px;
+            height: 18px;
+            margin-right: 10px;
+            accent-color: var(--primary);
+        }
+
+        .button {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition-normal);
+            box-shadow: var(--shadow-sm);
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: translateY(0);
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* プレーヤー画面のスタイル（既存スタイルを継承） */
+        .player-screen {
+            flex: 1;
+            display: none;
+            flex-direction: column;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .now-playing-card {
+            background-color: white;
+            border-radius: var(--card-radius);
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow-md);
+            text-align: center;
+        }
+
+        .current-info {
+            margin-bottom: 20px;
+        }
+
+        .current-chapter {
+            font-size: 14px;
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .current-title {
+            font-size: 18px;
+            color: var(--dark);
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .current-text {
+            margin-bottom: 12px;
+        }
+
+        .japanese {
+            font-size: 18px;
+            color: var(--dark);
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .english {
+            font-size: 16px;
+            color: var(--primary-dark);
+            font-style: italic;
+        }
+
+        .progress-info {
+            margin-bottom: 20px;
+        }
+
+        .progress-text {
+            font-size: 14px;
+            color: var(--dark);
+            margin-bottom: 8px;
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 8px;
+            background-color: var(--gray);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 12px;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--primary-light) 100%);
+            width: 0%;
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        .audio-progress {
+            width: 100%;
+            height: 6px;
+            background-color: var(--gray);
+            border-radius: 3px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+
+        .audio-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--secondary) 0%, #e0a700 100%);
+            width: 0%;
+            border-radius: 3px;
+            transition: width 0.1s linear;
+        }
+
+        .player-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .control-button {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--primary);
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition-normal);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .control-button:hover {
+            transform: scale(1.1);
+            background: var(--primary-dark);
+        }
+
+        .control-button.play-pause {
+            width: 56px;
+            height: 56px;
+            background: var(--accent);
+        }
+
+        .control-button.play-pause:hover {
+            background: #e54b4b;
+        }
+
+        .control-button svg {
+            width: 24px;
+            height: 24px;
+            color: white;
+        }
+
+        .speed-control {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .speed-label {
+            font-size: 14px;
+            color: var(--dark);
+            font-weight: 500;
+        }
+
+        .speed-select {
+            padding: 6px 12px;
+            border: 2px solid var(--gray);
+            border-radius: 6px;
+            font-size: 14px;
+            color: var(--dark);
+            background-color: white;
+            cursor: pointer;
+        }
+
+        .speed-select:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .button-secondary {
+            background: linear-gradient(135deg, var(--secondary) 0%, #e0a700 100%);
+        }
+
+        .hidden-audio {
+            display: none;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* モバイル対応（既存スタイルを継承） */
+        @media (max-width: 480px) {
+            .app-container {
+                margin: 0;
+                border-radius: 0;
+                min-height: 100vh;
+                max-width: 100%;
+                padding: 16px;
+            }
+            
+            .listening-title {
+                font-size: 20px;
+            }
+            
+            .player-controls {
+                gap: 10px;
+            }
+            
+            .control-button {
+                width: 40px;
+                height: 40px;
+            }
+            
+            .control-button.play-pause {
+                width: 48px;
+                height: 48px;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+    <script src="js/transition.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <div class="header">
+            <h1 class="listening-title">英語聞き流し</h1>
+            <button class="menu-button" id="menu-button" title="メニューに戻る">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+
+        <!-- 設定画面：ここが主要な修正箇所 -->
+        <div class="settings-screen" id="settings-screen">
+            <div class="settings-card">
+                <h2 class="settings-title">聞き流し設定</h2>
+                
+                <div class="form-group">
+                    <label for="range-select" class="form-label">範囲選択</label>
+                    <select id="range-select" class="select-box">
+                        <option value="all">すべての章</option>
+                        <option value="custom">範囲を指定</option>
+                    </select>
+                </div>
+
+                <!-- 新機能：カスタム範囲設定エリア（タイトル選択機能を含む） -->
+                <div class="form-group" id="custom-range" style="display: none;">
+                    <label for="start-chapter" class="form-label">開始章</label>
+                    <select id="start-chapter" class="select-box">
+                        <!-- JavaScriptで動的に追加 -->
+                    </select>
+                    
+                    <label for="end-chapter" class="form-label" style="margin-top: 12px;">終了章</label>
+                    <select id="end-chapter" class="select-box">
+                        <!-- JavaScriptで動的に追加 -->
+                    </select>
+                    
+                    <!-- 新機能：タイトル単位詳細設定 -->
+                    <div class="checkbox-group" style="margin-top: 16px;">
+                        <input type="checkbox" id="title-detail" class="checkbox">
+                        <label for="title-detail" class="form-label" style="margin-bottom: 0;">タイトル単位で詳細設定</label>
+                    </div>
+                    
+                    <!-- 新機能：タイトル選択エリア（チェックボックスON時に表示） -->
+                    <div id="title-range" style="display: none; margin-top: 12px;">
+                        <label for="start-title" class="form-label">開始タイトル</label>
+                        <select id="start-title" class="select-box">
+                            <!-- JavaScriptで動的に追加 -->
+                        </select>
+                        
+                        <label for="end-title" class="form-label" style="margin-top: 12px;">終了タイトル</label>
+                        <select id="end-title" class="select-box">
+                            <!-- JavaScriptで動的に追加 -->
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="show-text" class="checkbox" checked>
+                        <label for="show-text" class="form-label" style="margin-bottom: 0;">テキストを表示する</label>
+                    </div>
+                    
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="auto-repeat" class="checkbox">
+                        <label for="auto-repeat" class="form-label" style="margin-bottom: 0;">リピート再生</label>
+                    </div>
+                    
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="pause-between" class="checkbox" checked>
+                        <label for="pause-between" class="form-label" style="margin-bottom: 0;">フレーズ間に間隔を空ける（2秒）</label>
+                    </div>
+                    
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="repeat-phrase" class="checkbox" checked>
+                        <label for="repeat-phrase" class="form-label" style="margin-bottom: 0;">各フレーズを2回再生する</label>
+                    </div>
+                </div>
+
+                <button class="button" id="start-listening">聞き流しを開始</button>
+            </div>
+        </div>
+
+        <!-- プレーヤー画面：変更不要 -->
+        <div class="player-screen" id="player-screen">
+            <div class="now-playing-card">
+                <div class="current-info">
+                    <div class="current-chapter" id="current-chapter">Chapter 1</div>
+                    <div class="current-title" id="current-title">タイトル名</div>
+                    
+                    <div id="text-display">
+                        <div class="current-text">
+                            <div class="japanese" id="current-japanese">日本語の文章</div>
+                            <div class="english" id="current-english">English sentence</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="progress-info">
+                    <div class="progress-text" id="progress-text">1 / 100</div>
+                    <div class="progress-container">
+                        <div class="progress-bar" id="overall-progress"></div>
+                    </div>
+                    
+                    <div class="audio-progress" id="audio-progress">
+                        <div class="audio-progress-bar" id="audio-progress-bar"></div>
+                    </div>
+                </div>
+
+                <div class="player-controls">
+                    <button class="control-button" id="prev-button" title="前へ">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polygon points="19 20 9 12 19 4 19 20"></polygon>
+                            <line x1="5" y1="19" x2="5" y2="5"></line>
+                        </svg>
+                    </button>
+                    
+                    <button class="control-button play-pause" id="play-pause-button" title="再生/一時停止">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                        </svg>
+                    </button>
+                    
+                    <button class="control-button" id="next-button" title="次へ">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polygon points="5 4 15 12 5 20 5 4"></polygon>
+                            <line x1="19" y1="5" x2="19" y2="19"></line>
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="speed-control">
+                    <span class="speed-label">再生速度:</span>
+                    <select id="playback-speed" class="speed-select">
+                        <option value="0.7">0.7×</option>
+                        <option value="0.8">0.8×</option>
+                        <option value="0.9">0.9×</option>
+                        <option value="1.0" selected>1.0×</option>
+                        <option value="1.1">1.1×</option>
+                        <option value="1.2">1.2×</option>
+                        <option value="1.5">1.5×</option>
+                    </select>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="button button-secondary" id="back-to-settings">設定に戻る</button>
+                    <button class="button" id="stop-listening">聞き流しを終了</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 非表示オーディオ要素 -->
+        <audio id="audio-element" class="hidden-audio"></audio>
+    </div>
+
+    <script>
+        // データ：既存のデータ処理結果を活用
+        const chapterList = createChapterList();
+        const allAudioData = createAllAudioData();
+        
+        // DOM要素：新しいタイトル選択用の要素を追加
+        const settingsScreen = document.getElementById('settings-screen');
+        const playerScreen = document.getElementById('player-screen');
+        const rangeSelect = document.getElementById('range-select');
+        const customRange = document.getElementById('custom-range');
+        const startChapterSelect = document.getElementById('start-chapter');
+        const endChapterSelect = document.getElementById('end-chapter');
+        const titleDetailCheckbox = document.getElementById('title-detail');
+        const titleRange = document.getElementById('title-range');
+        const startTitleSelect = document.getElementById('start-title');
+        const endTitleSelect = document.getElementById('end-title');
+        const showTextCheckbox = document.getElementById('show-text');
+        const autoRepeatCheckbox = document.getElementById('auto-repeat');
+        const pauseBetweenCheckbox = document.getElementById('pause-between');
+        const repeatPhraseCheckbox = document.getElementById('repeat-phrase');
+        const startListeningButton = document.getElementById('start-listening');
+        const backToSettingsButton = document.getElementById('back-to-settings');
+        const stopListeningButton = document.getElementById('stop-listening');
+        const menuButton = document.getElementById('menu-button');
+        
+        // プレーヤー要素：既存の要素をそのまま継承
+        const currentChapter = document.getElementById('current-chapter');
+        const currentTitle = document.getElementById('current-title');
+        const currentJapanese = document.getElementById('current-japanese');
+        const currentEnglish = document.getElementById('current-english');
+        const textDisplay = document.getElementById('text-display');
+        const progressText = document.getElementById('progress-text');
+        const overallProgress = document.getElementById('overall-progress');
+        const audioProgress = document.getElementById('audio-progress');
+        const audioProgressBar = document.getElementById('audio-progress-bar');
+        const playPauseButton = document.getElementById('play-pause-button');
+        const prevButton = document.getElementById('prev-button');
+        const nextButton = document.getElementById('next-button');
+        const playbackSpeedSelect = document.getElementById('playback-speed');
+        const audioElement = document.getElementById('audio-element');
+        
+        // 変数：既存の変数を継承
+        let currentPlaylist = [];
+        let currentIndex = 0;
+        let isPlaying = false;
+        let showText = true;
+        let autoRepeat = false;
+        let pauseBetweenPhrases = true;
+        let repeatPhrase = true;
+        let currentRepeatCount = 0;
+        let isWaitingBetweenPhrases = false;
+        
+        // 初期化：基本構造は既存を継承
+        document.addEventListener('DOMContentLoaded', function() {
+            setupChapterSelects();
+            setupEventListeners();
+        });
+        
+        function setupChapterSelects() {
+            // 章選択ボックスを設定：既存のデータ構造を活用
+            chapterList.forEach(chapter => {
+                if (chapter.key) { // 空の章は除外
+                    const optionStart = document.createElement('option');
+                    optionStart.value = chapter.key;
+                    optionStart.textContent = chapter.display;
+                    startChapterSelect.appendChild(optionStart);
+                    
+                    const optionEnd = document.createElement('option');
+                    optionEnd.value = chapter.key;
+                    optionEnd.textContent = chapter.display;
+                    endChapterSelect.appendChild(optionEnd);
+                }
+            });
+            
+            // 最後の章を終了章として設定
+            const validChapters = chapterList.filter(c => c.key);
+            if (validChapters.length > 0) {
+                endChapterSelect.value = validChapters[validChapters.length - 1].key;
+            }
+        }
+        
+        // 新機能：指定された章の範囲内のタイトル一覧を取得する関数
+        function getTitlesInChapterRange(startChapter, endChapter) {
+            const startNum = chapterList.find(c => c.key === startChapter)?.number || 1;
+            const endNum = chapterList.find(c => c.key === endChapter)?.number || 999;
+            
+            // 指定された章範囲内の音声データを取得
+            const dataInRange = allAudioData.filter(item => {
+                const itemNum = item.chapter_number;
+                return itemNum >= startNum && itemNum <= endNum;
+            });
+            
+            // タイトルを順序を保ちながら重複除去
+            const titleMap = new Map();
+            dataInRange.forEach(item => {
+                const key = `${item.chapter_number}-${item.title}`;
+                if (!titleMap.has(key)) {
+                    titleMap.set(key, {
+                        chapter: item.chapter,
+                        chapter_number: item.chapter_number,
+                        title: item.title,
+                        order: item.order
+                    });
+                }
+            });
+            
+            // Map から配列に変換し、章番号と順序で並び替え
+            return Array.from(titleMap.values()).sort((a, b) => {
+                if (a.chapter_number !== b.chapter_number) {
+                    return a.chapter_number - b.chapter_number;
+                }
+                return a.order - b.order;
+            });
+        }
+        
+        // 新機能：タイトル選択ボックスを更新する関数
+        function updateTitleSelects() {
+            const startChapter = startChapterSelect.value;
+            const endChapter = endChapterSelect.value;
+            
+            // 既存のオプションをクリア
+            startTitleSelect.innerHTML = '';
+            endTitleSelect.innerHTML = '';
+            
+            // 選択された章範囲のタイトルを取得
+            const titlesInRange = getTitlesInChapterRange(startChapter, endChapter);
+            
+            // タイトル選択ボックスにオプションを追加
+            titlesInRange.forEach((titleInfo, index) => {
+                const optionStart = document.createElement('option');
+                optionStart.value = `${titleInfo.chapter_number}-${titleInfo.title}`;
+                optionStart.textContent = titleInfo.title;
+                startTitleSelect.appendChild(optionStart);
+                
+                const optionEnd = document.createElement('option');
+                optionEnd.value = `${titleInfo.chapter_number}-${titleInfo.title}`;
+                optionEnd.textContent = titleInfo.title;
+                endTitleSelect.appendChild(optionEnd);
+            });
+            
+            // デフォルト選択：最初のタイトルを開始、最後のタイトルを終了に設定
+            if (titlesInRange.length > 0) {
+                startTitleSelect.value = `${titlesInRange[0].chapter_number}-${titlesInRange[0].title}`;
+                endTitleSelect.value = `${titlesInRange[titlesInRange.length - 1].chapter_number}-${titlesInRange[titlesInRange.length - 1].title}`;
+            }
+        }
+        
+        function setupEventListeners() {
+            // 既存のイベントリスナー
+            rangeSelect.addEventListener('change', function() {
+                customRange.style.display = this.value === 'custom' ? 'block' : 'none';
+            });
+            
+            // 新機能：タイトル詳細設定チェックボックスのイベントリスナー
+            titleDetailCheckbox.addEventListener('change', function() {
+                titleRange.style.display = this.checked ? 'block' : 'none';
+                if (this.checked) {
+                    updateTitleSelects();
+                }
+            });
+            
+            // 新機能：章選択変更時のイベントリスナー
+            startChapterSelect.addEventListener('change', function() {
+                if (titleDetailCheckbox.checked) {
+                    updateTitleSelects();
+                }
+            });
+            
+            endChapterSelect.addEventListener('change', function() {
+                if (titleDetailCheckbox.checked) {
+                    updateTitleSelects();
+                }
+            });
+            
+            // 既存のイベントリスナーをそのまま継承
+            startListeningButton.addEventListener('click', startListening);
+            backToSettingsButton.addEventListener('click', backToSettings);
+            stopListeningButton.addEventListener('click', stopListening);
+            menuButton.addEventListener('click', goToMenu);
+            
+            playPauseButton.addEventListener('click', togglePlayPause);
+            prevButton.addEventListener('click', playPrevious);
+            nextButton.addEventListener('click', playNext);
+            
+            audioProgress.addEventListener('click', seekAudio);
+            playbackSpeedSelect.addEventListener('change', changePlaybackSpeed);
+            
+            audioElement.addEventListener('timeupdate', updateAudioProgress);
+            audioElement.addEventListener('ended', audioEnded);
+        }
+        
+        function startListening() {
+            // 設定を取得：新機能に対応
+            const rangeValue = rangeSelect.value;
+            const useTitleDetail = titleDetailCheckbox.checked;
+            showText = showTextCheckbox.checked;
+            autoRepeat = autoRepeatCheckbox.checked;
+            pauseBetweenPhrases = pauseBetweenCheckbox.checked;
+            repeatPhrase = repeatPhraseCheckbox.checked;
+            
+            // プレイリストを作成：新機能の分岐処理
+            if (rangeValue === 'all') {
+                currentPlaylist = [...allAudioData];
+            } else {
+                if (useTitleDetail) {
+                    currentPlaylist = createTitleBasedPlaylist();
+                } else {
+                    currentPlaylist = createChapterBasedPlaylist();
+                }
+            }
+            
+            if (currentPlaylist.length === 0) {
+                alert('選択された範囲に音声データがありません。');
+                return;
+            }
+            
+            // 既存のプレーヤー起動ロジックを継承
+            currentIndex = 0;
+            currentRepeatCount = 0;
+            settingsScreen.style.display = 'none';
+            playerScreen.style.display = 'flex';
+            
+            textDisplay.style.display = showText ? 'block' : 'none';
+            
+            loadCurrentAudio();
+            playAudio();
+        }
+        
+        // 新機能：章単位でのプレイリスト作成（従来の機能）
+        function createChapterBasedPlaylist() {
+            const startChapter = startChapterSelect.value;
+            const endChapter = endChapterSelect.value;
+            
+            const startNum = chapterList.find(c => c.key === startChapter)?.number || 1;
+            const endNum = chapterList.find(c => c.key === endChapter)?.number || 999;
+            
+            return allAudioData.filter(item => {
+                const itemNum = item.chapter_number;
+                return itemNum >= startNum && itemNum <= endNum;
+            });
+        }
+        
+        // 新機能：タイトル単位でのプレイリスト作成
+        function createTitleBasedPlaylist() {
+            const startTitleValue = startTitleSelect.value;
+            const endTitleValue = endTitleSelect.value;
+            
+            if (!startTitleValue || !endTitleValue) {
+                return [];
+            }
+            
+            // タイトル値から章番号とタイトル名を分離
+            const [startChapterNum, startTitle] = startTitleValue.split('-', 2);
+            const [endChapterNum, endTitle] = endTitleValue.split('-', 2);
+            
+            const startChapterNumber = parseInt(startChapterNum);
+            const endChapterNumber = parseInt(endChapterNum);
+            
+            // タイトル範囲でのフィルタリング
+            return allAudioData.filter(item => {
+                const itemChapterNum = item.chapter_number;
+                const itemTitle = item.title;
+                
+                // 章範囲外の場合は除外
+                if (itemChapterNum < startChapterNumber || itemChapterNum > endChapterNumber) {
+                    return false;
+                }
+                
+                // 開始章の場合: 指定されたタイトル以降のデータのみ
+                if (itemChapterNum === startChapterNumber && itemChapterNum === endChapterNumber) {
+                    // 同じ章内での範囲選択
+                    return isItemInTitleRange(item, startTitle, endTitle, true);
+                } else if (itemChapterNum === startChapterNumber) {
+                    // 開始章: 指定タイトル以降の全て
+                    return isItemInTitleRange(item, startTitle, null, false);
+                } else if (itemChapterNum === endChapterNumber) {
+                    // 終了章: 指定タイトル以前の全て
+                    return isItemInTitleRange(item, null, endTitle, false);
+                } else {
+                    // 中間の章: 全てのタイトルを含む
+                    return true;
+                }
+            });
+        }
+        
+        // 新機能：指定されたタイトル範囲内にアイテムが含まれるかを判定する補助関数
+        function isItemInTitleRange(item, startTitle, endTitle, isSameChapter) {
+            const itemTitle = item.title;
+            
+            if (isSameChapter && startTitle && endTitle) {
+                // 同じ章内での範囲判定
+                const chapterTitles = getTitlesInChapterRange(item.chapter, item.chapter)
+                    .map(t => t.title);
+                
+                const startIndex = chapterTitles.indexOf(startTitle);
+                const endIndex = chapterTitles.indexOf(endTitle);
+                const itemIndex = chapterTitles.indexOf(itemTitle);
+                
+                return itemIndex >= startIndex && itemIndex <= endIndex;
+            } else if (startTitle && !endTitle) {
+                // 開始タイトル以降の判定
+                const chapterTitles = getTitlesInChapterRange(item.chapter, item.chapter)
+                    .map(t => t.title);
+                
+                const startIndex = chapterTitles.indexOf(startTitle);
+                const itemIndex = chapterTitles.indexOf(itemTitle);
+                
+                return itemIndex >= startIndex;
+            } else if (!startTitle && endTitle) {
+                // 終了タイトル以前の判定
+                const chapterTitles = getTitlesInChapterRange(item.chapter, item.chapter)
+                    .map(t => t.title);
+                
+                const endIndex = chapterTitles.indexOf(endTitle);
+                const itemIndex = chapterTitles.indexOf(itemTitle);
+                
+                return itemIndex <= endIndex;
+            }
+            
+            return true;
+        }
+        
+        // 以下の関数は既存ロジックをそのまま継承（変更不要）
+        function loadCurrentAudio() {
+            if (currentIndex >= currentPlaylist.length) {
+                if (autoRepeat) {
+                    currentIndex = 0;
+                } else {
+                    stopListening();
+                    return;
+                }
+            }
+            
+            const currentItem = currentPlaylist[currentIndex];
+            
+            // 表示を更新
+            const chapterInfo = chapterList.find(c => c.key === currentItem.chapter);
+            currentChapter.textContent = chapterInfo ? chapterInfo.display : currentItem.chapter;
+            currentTitle.textContent = currentItem.title;
+            currentJapanese.textContent = currentItem.japanese;
+            currentEnglish.textContent = currentItem.english;
+            
+            // 進捗を更新
+            progressText.textContent = `${currentIndex + 1} / ${currentPlaylist.length}`;
+            const progress = ((currentIndex + 1) / currentPlaylist.length) * 100;
+            overallProgress.style.width = `${progress}%`;
+            
+            // 音声を設定
+            audioElement.src = currentItem.audio_path;
+            audioElement.playbackRate = parseFloat(playbackSpeedSelect.value);
+        }
+        
+        function playAudio() {
+            audioElement.play().then(() => {
+                isPlaying = true;
+                updatePlayButton();
+            }).catch(error => {
+                console.error('音声再生エラー:', error);
+                playNext();
+            });
+        }
+        
+        function pauseAudio() {
+            audioElement.pause();
+            isPlaying = false;
+            updatePlayButton();
+        }
+        
+        function togglePlayPause() {
+            if (isPlaying) {
+                pauseAudio();
+            } else {
+                playAudio();
+            }
+        }
+        
+        function playPrevious() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                currentRepeatCount = 0;
+                loadCurrentAudio();
+                if (isPlaying) {
+                    playAudio();
+                }
+            }
+        }
+        
+        function playNext() {
+            currentIndex++;
+            currentRepeatCount = 0;
+            loadCurrentAudio();
+            if (isPlaying) {
+                playAudio();
+            }
+        }
+        
+        function updatePlayButton() {
+            if (isPlaying) {
+                playPauseButton.innerHTML = `
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="6" y="4" width="4" height="16"></rect>
+                        <rect x="14" y="4" width="4" height="16"></rect>
+                    </svg>
+                `;
+            } else {
+                playPauseButton.innerHTML = `
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                    </svg>
+                `;
+            }
+        }
+        
+        function updateAudioProgress() {
+            if (audioElement.duration) {
+                const progress = (audioElement.currentTime / audioElement.duration) * 100;
+                audioProgressBar.style.width = `${progress}%`;
+            }
+        }
+        
+        function seekAudio(e) {
+            const rect = audioProgress.getBoundingClientRect();
+            const clickX = e.clientX - rect.left;
+            const width = rect.width;
+            const clickRatio = clickX / width;
+            
+            if (audioElement.duration) {
+                audioElement.currentTime = clickRatio * audioElement.duration;
+            }
+        }
+        
+        function changePlaybackSpeed() {
+            audioElement.playbackRate = parseFloat(playbackSpeedSelect.value);
+        }
+        
+        function audioEnded() {
+            // フレーズ繰り返し機能の処理
+            if (repeatPhrase && currentRepeatCount < 1) {
+                currentRepeatCount++;
+                playAudio();
+                return;
+            }
+            
+            // 次のフレーズに進む処理
+            currentRepeatCount = 0;
+            
+            if (pauseBetweenPhrases) {
+                isWaitingBetweenPhrases = true;
+                setTimeout(() => {
+                    isWaitingBetweenPhrases = false;
+                    playNext();
+                }, 2000);
+            } else {
+                playNext();
+            }
+        }
+        
+        function backToSettings() {
+            pauseAudio();
+            playerScreen.style.display = 'none';
+            settingsScreen.style.display = 'flex';
+        }
+        
+        function stopListening() {
+            pauseAudio();
+            currentPlaylist = [];
+            currentIndex = 0;
+            playerScreen.style.display = 'none';
+            settingsScreen.style.display = 'flex';
+        }
+        
+        function goToMenu() {
+            window.location.href = "index.html";
+        }
+    </script>
+</body>
+</html>
